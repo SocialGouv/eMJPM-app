@@ -104,7 +104,7 @@ const FormFilterMandataire = ({ props }) => {
 				</td>
 
 				<SearchButton align="center" type="submit" style={{ marginTop: "20px" }}>
-					Ouvrir la mesure
+					Rechercher
 				</SearchButton>
 			</div>
 		</Presentation>
