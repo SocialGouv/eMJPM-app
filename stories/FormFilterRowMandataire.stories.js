@@ -5,9 +5,10 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
 
-import FilterMesuresMap from "../src/components/FilterMesuresMap";
 import FormFilterMandataire from "../src/components/FormFilterMandataire";
 import RowMandataire from "../src/components/RowMandataires";
+import FormInput from "../src/components/FormInput";
+import SearchButton from "../src/components/SearchButton";
 
 const mandataire0 = {
 	ville: "MartinVille",

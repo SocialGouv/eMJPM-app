@@ -5,7 +5,8 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
 
-import { Post, Search } from "../src/components/FilterMesuresMap";
+import FormInput from "../src/components/FormInput";
+import SearchButton from "../src/components/SearchButton";
 
 const FormFilterMandataire = ({ props }) => {
 	return (
@@ -14,7 +15,7 @@ const FormFilterMandataire = ({ props }) => {
 				<Title> Rechercher par lieu de rattachement </Title>
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							padd="2"
 							size="120"
 							id="code_postal"
@@ -23,7 +24,7 @@ const FormFilterMandataire = ({ props }) => {
 						/>
 					</tr>
 					<tr>
-						<Post
+						<FormInput
 							padd="2"
 							size="260"
 							id="commune"
@@ -35,7 +36,7 @@ const FormFilterMandataire = ({ props }) => {
 				<Title> Rechercher par zone d'intervention </Title>
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							padd="2"
 							size="120"
 							id="code_postal"
@@ -44,7 +45,7 @@ const FormFilterMandataire = ({ props }) => {
 						/>
 					</tr>
 					<tr>
-						<Post
+						<FormInput
 							padd="2"
 							size="260"
 							id="commune"
@@ -58,7 +59,7 @@ const FormFilterMandataire = ({ props }) => {
 
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							padd="2"
 							size="385"
 							id="nameOrService"
@@ -102,9 +103,9 @@ const FormFilterMandataire = ({ props }) => {
 					</div>
 				</td>
 
-				<Search align="center" type="submit" style={{ marginTop: "20px" }}>
-					Rechercher
-				</Search>
+				<SearchButton align="center" type="submit" style={{ marginTop: "20px" }}>
+					Ouvrir la mesure
+				</SearchButton>
 			</div>
 		</Presentation>
 	);

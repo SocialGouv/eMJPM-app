@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { Post, Search } from "./FilterMesuresMap";
+import FormInput from "./FormInput";
+import SearchButton from "./SearchButton";
 
 const FormFilterMandataire = ({ props }) => {
 	return (
@@ -9,7 +10,7 @@ const FormFilterMandataire = ({ props }) => {
 				<Title> Rechercher par lieu de rattachement </Title>
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							size="120"
 							id="code_postal"
 							name="code_postal"
@@ -17,13 +18,13 @@ const FormFilterMandataire = ({ props }) => {
 						/>
 					</tr>
 					<tr>
-						<Post size="260" id="commune" name="commune" placeholder="Commune" />
+						<FormInput size="260" id="commune" name="commune" placeholder="Commune" />
 					</tr>
 				</td>
 				<Title> Rechercher par zone d'intervention </Title>
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							size="120"
 							id="code_postal"
 							name="code_postal"
@@ -31,7 +32,7 @@ const FormFilterMandataire = ({ props }) => {
 						/>
 					</tr>
 					<tr>
-						<Post size="260" id="commune" name="commune" placeholder="Commune" />
+						<FormInput size="260" id="commune" name="commune" placeholder="Commune" />
 					</tr>
 				</td>
 
@@ -39,7 +40,7 @@ const FormFilterMandataire = ({ props }) => {
 
 				<td className="form-inline">
 					<tr>
-						<Post
+						<FormInput
 							size="385"
 							id="nameOrService"
 							name="nameOrService"
@@ -82,9 +83,9 @@ const FormFilterMandataire = ({ props }) => {
 					</div>
 				</td>
 
-				<Search align="center" type="submit" style={{ marginTop: "20px" }}>
+				<SearchButton align="center" type="submit" style={{ marginTop: "20px" }}>
 					Rechercher
-				</Search>
+				</SearchButton>
 			</div>
 		</Presentation>
 	);
