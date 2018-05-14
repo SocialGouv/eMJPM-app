@@ -129,17 +129,17 @@ class FormulaireMandataire extends React.Component {
 
   render() {
     const formData = {
-      nom: `${this.props.currentMandataireModal.nom}`,
-      prenom: `${this.props.currentMandataireModal.prenom}`,
-      telephone: `${this.props.currentMandataireModal.telephone}`,
-      telephone_portable: `${this.props.currentMandataireModal.telephone_portable}`,
-      ville: `${this.props.currentMandataireModal.ville}`,
-      adresse: `${this.props.currentMandataireModal.adresse}`,
-      secretariat: `${this.props.currentMandataireModal.secretariat}`,
-      nb_secretariat: `${this.props.currentMandataireModal.nb_secretariat}`,
-      email: `${this.props.currentMandataireModal.email}`,
-      code_postal: `${this.props.currentMandataireModal.code_postal}`,
-      dispo_max: `${this.props.currentMandataireModal.dispo_max}`
+      nom: `${this.props.currentMandataireModal.nom ? `${this.props.currentMandataireModal.nom}` : " ")}`,
+      prenom: `${this.props.currentMandataireModal.prenom ? `${this.props.currentMandataireModal.prenom}` : " ")}`,
+      telephone: `${this.props.currentMandataireModal.telephone ? `${this.props.currentMandataireModal.telephone}` : " ")}`,
+      telephone_portable: `${this.props.currentMandataireModal.telephone_portable ? `${this.props.currentMandataireModal.telephone_portable}` : " ")}`,
+      ville: `${this.props.currentMandataireModal.ville ? `${this.props.currentMandataireModal.ville}` : " ")}`,
+      adresse: `${this.props.currentMandataireModal.adresse ? `${this.props.currentMandataireModal.adresse}` : " ")}`,
+      secretariat: `${this.props.currentMandataireModal.secretariat ? `${this.props.currentMandataireModal.secretariat}` : " ")}`,
+      nb_secretariat: `${this.props.currentMandataireModal.nb_secretariat ? `${this.props.currentMandataireModal.nb_secretariat}` : " ")}`,
+      email: `${this.props.currentMandataireModal.email ? `${this.props.currentMandataireModal.email}` : " ")}`,
+      code_postal: `${this.props.currentMandataireModal.code_postal ? `${this.props.currentMandataireModal.code_postal}` : " ")}`,
+      dispo_max: `${this.props.currentMandataireModal.dispo_max ? `${this.props.currentMandataireModal.dispo_max }` : " ")}`
     };
     return (
       <div className="container">
