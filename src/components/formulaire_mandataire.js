@@ -1,33 +1,86 @@
 import fetch from "isomorphic-fetch";
 import Modal from "react-modal";
 import Form from "react-jsonschema-form";
+import styled from "styled-components";
 
 import apiFetch from "./Api";
 import RowModal from "./RowModal";
 import SearchButton from "./SearchButton";
 
+const ExitButton = styled.button`
+  cursor: pointer;
+  margin: 5px;
+  background-color: grey;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  border: 1px solid;
+  border-color: grey;
+  box-shadow: 0px 0px 0px grey;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  &:hover {
+    background-color: red;
+    border-color: red;
+    box-shadow: 0px 0px 0px red;
+  }
+`;
+
+const ModalInformation = styled(Modal)`
+  position: absolute;
+  width: 900px !important;
+  height: 450px !important;
+  background-color: white;
+  opacity: 1 !important;
+  overflow: auto;
+`;
+
 const schema = {
   title: "Modifier vos informations",
   type: "object",
-  required: [],
+  required: [
+    "nom",
+    "prenom",
+    "telephone",
+    "telephone_portable",
+    "email",
+    "adresse",
+    "code_postal",
+    "ville",
+    "dispo_max",
+    "secretariat",
+    "nb_secretariat"
+  ],
   properties: {
-    nom: { type: "string", title: "Nom" },
-    prenom: { type: "string", title: "Prénom" },
-    telephone: { type: "string", title: "Téléphone" },
+    nom: { type: "string", title: "Nom", default: "" },
+    prenom: { type: "string", title: "Prénom", default: "" },
+    telephone: { type: "string", title: "Téléphone", default: "" },
     telephone_portable: {
       type: "string",
-      title: "Téléphone Portable"
+      title: "Téléphone Portable",
+      default: ""
     },
-    email: { type: "string", title: "Adresse email" },
-    adresse: { type: "string", title: "Rue" },
-    code_postal: { type: "string", title: "Code Postal" },
-    ville: { type: "string", title: "Commune" },
+    email: { type: "string", title: "Adresse email", default: "" },
+    adresse: { type: "string", title: "Rue", default: "" },
+    code_postal: { type: "string", title: "Code Postal", default: "" },
+    ville: { type: "string", title: "Commune", default: "" },
     dispo_max: {
-      type: "string",
-      title: "Nombre de mesures souhaitées"
+      type: "integer",
+      title: "Nombre de mesures souhaitées",
+      default: ""
     },
-    secretariat: { type: "boolean", title: "Secretariat", enumNames: ["Oui", "Non"] },
-    nb_secretariat: { type: "string", title: "Secrétariat : nombre d'ETP" }
+    secretariat: {
+      type: "boolean",
+      title: "Secretariat",
+      enumNames: ["Oui", "Non"]
+    },
+    nb_secretariat: {
+      type: "integer",
+      title: "Secrétariat : nombre d'ETP",
+      default: ""
+    }
   }
 };
 
@@ -87,8 +140,6 @@ const uiSchema = {
   // }
 };
 
-const formData = {};
-
 class FormulaireMandataire extends React.Component {
   state = {
     data: [],
@@ -101,14 +152,14 @@ class FormulaireMandataire extends React.Component {
     apiFetch(`/mandataires/1`, {
       method: "PUT",
       body: JSON.stringify({
-        nom: formData.nom || null,
-        prenom: formData.prenom || null,
-        telephone: formData.telephone || null,
-        telephone_portable: formData.telephone_portable || null,
-        email: formData.email || null,
-        adresse: formData.adresse || null,
-        code_postal: formData.code_postal || null,
-        ville: formData.ville || null,
+        nom: formData.nom || "",
+        prenom: formData.prenom || "",
+        telephone: formData.telephone || "",
+        telephone_portable: formData.telephone_portable || "",
+        email: formData.email || "",
+        adresse: formData.adresse || "",
+        code_postal: formData.code_postal || "",
+        ville: formData.ville || "",
         dispo_max: formData.dispo_max || 0,
         secretariat: formData.secretariat,
         nb_secretariat: formData.nb_secretariat || 0
@@ -128,50 +179,17 @@ class FormulaireMandataire extends React.Component {
 
   render() {
     const formData = {
-      nom: this.props.currentMandataireModal.nom || "",
-
-      prenom: `${
-        this.props.currentMandataireModal.prenom
-          ? `${this.props.currentMandataireModal.prenom}`
-          : " "
-      }`,
-      telephone: `${
-        this.props.currentMandataireModal.telephone
-          ? `${this.props.currentMandataireModal.telephone}`
-          : " "
-      }`,
-      telephone_portable: this.props.currentMandataireModal.telephone_portable || "",
-      ville: `${
-        this.props.currentMandataireModal.ville ? `${this.props.currentMandataireModal.ville}` : " "
-      }`,
-      adresse: `${
-        this.props.currentMandataireModal.adresse
-          ? `${this.props.currentMandataireModal.adresse}`
-          : " "
-      }`,
-      secretariat: `${
-        this.props.currentMandataireModal.secretariat
-          ? `${this.props.currentMandataireModal.secretariat}`
-          : " "
-      }`,
-      nb_secretariat: `${
-        this.props.currentMandataireModal.nb_secretariat
-          ? `${this.props.currentMandataireModal.nb_secretariat}`
-          : " "
-      }`,
-      email: `${
-        this.props.currentMandataireModal.email ? `${this.props.currentMandataireModal.email}` : " "
-      }`,
-      code_postal: `${
-        this.props.currentMandataireModal.code_postal
-          ? `${this.props.currentMandataireModal.code_postal}`
-          : " "
-      }`,
-      dispo_max: `${
-        this.props.currentMandataireModal.dispo_max
-          ? `${this.props.currentMandataireModal.dispo_max}`
-          : " "
-      }`
+      nom: this.props.currentMandataireModal.nom,
+      prenom: this.props.currentMandataireModal.prenom,
+      telephone: this.props.currentMandataireModal.telephone,
+      telephone_portable: this.props.currentMandataireModal.telephone_portable,
+      ville: this.props.currentMandataireModal.ville,
+      adresse: this.props.currentMandataireModal.adresse,
+      secretariat: this.props.currentMandataireModal.secretariat,
+      nb_secretariat: this.props.currentMandataireModal.nb_secretariat,
+      email: this.props.currentMandataireModal.email,
+      code_postal: this.props.currentMandataireModal.code_postal,
+      dispo_max: this.props.currentMandataireModal.dispo_max
     };
     return (
       <div className="container">
@@ -185,16 +203,17 @@ class FormulaireMandataire extends React.Component {
                     {this.props.currentMandataireModal.nom}
                   </b>
                   <br />
-                  {this.props.currentMandataireModal.type.toUpperCase()}
+                  {this.props.currentMandataireModal.type}
                   <br />
                   <br />
                   <b>Contact</b>
                   <br />
-                  {this.props.currentMandataireModal.prenom} {this.props.currentMandataireModal.nom}
+                  {this.props.currentMandataireModal.prenom}{" "}
+                  {this.props.currentMandataireModal.nom}
                   <br />
                   {this.props.currentMandataireModal.telephone}
                   <br />
-                  {this.props.currentMandataireModal.telephone_portable || ""}
+                  {this.props.currentMandataireModal.telephone_portable}
                   <br />
                   <br />
                   <b> Adresse</b>
@@ -224,24 +243,32 @@ class FormulaireMandataire extends React.Component {
           </div>
         )}
 
-        <Modal
+        <ModalInformation
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="mandataire"
           background="#e9ecef"
           style={customStyles}
           overlayClassName="OverlayInput"
-          className="ModalInformation"
         >
-          <button className="ModalExit" onClick={this.closeModal}>
-            X
-          </button>
-          <Form schema={schema} formData={formData} uiSchema={uiSchema} onSubmit={this.onSubmit}>
-            <div style={{ textAlign: "left", paddingBottom: "10px", marginLeft: "20px" }}>
+          <ExitButton onClick={this.closeModal}>X</ExitButton>
+          <Form
+            schema={schema}
+            formData={formData}
+            uiSchema={uiSchema}
+            onSubmit={this.onSubmit}
+          >
+            <div
+              style={{
+                textAlign: "left",
+                paddingBottom: "10px",
+                marginLeft: "20px"
+              }}
+            >
               <SearchButton type="submit">Enregistrer</SearchButton>
             </div>
           </Form>
-        </Modal>
+        </ModalInformation>
       </div>
     );
   }

@@ -246,7 +246,10 @@ class Ti extends React.Component {
         />
         <div className="container">
           <Title>
-            {mandatairesCount} Professionel{(mandatairesCount > 1 && "s") || null} référencé{(mandatairesCount > 1 && "s") || null}{" "}
+            {mandatairesCount} Professionel{(mandatairesCount > 1 && "s") || null} référencé{(mandatairesCount >
+              1 &&
+              "s") ||
+              null}{" "}
           </Title>
           <TableMandataire rows={filteredMandataires} openModal={this.openModal} />
           <ModalMandataire isOpen={this.state.modalIsOpen} closeModal={this.closeModal}>
