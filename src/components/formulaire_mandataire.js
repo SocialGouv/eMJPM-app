@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import Form from "react-jsonschema-form";
 import styled from "styled-components";
 
+import piwik from "../piwik";
 import apiFetch from "./Api";
 import RowModal from "./RowModal";
 import SearchButton from "./SearchButton";
@@ -35,6 +36,9 @@ const ModalInformation = styled(Modal)`
   background-color: white;
   opacity: 1 !important;
   overflow: auto;
+  div.form-group {
+    vertical-align: top;
+  }
 `;
 
 const schema = {
@@ -165,6 +169,14 @@ class FormulaireMandataire extends React.Component {
         nb_secretariat: formData.nb_secretariat || 0
       })
     }).then(json => {
+      if (formData.dispo_max !== this.props.currentMandataireModal.dispo_max) {
+        piwik.push([
+          "trackEvent",
+          "mesures",
+          "Modification du nombre de mesures souhaitées par un mandataire"
+        ]);
+      }
+
       this.props.updateMadataire(json);
     });
     this.closeModal();
@@ -234,9 +246,12 @@ class FormulaireMandataire extends React.Component {
                   {this.props.currentMandataireModal.secretariat} -{" "}
                   {this.props.currentMandataireModal.nb_secretariat} <br />
                   <br />
-                  <button className={"btn btn-dark"} onClick={this.openModal}>
+                  <SearchButton
+                    className={"btn btn-dark"}
+                    onClick={this.openModal}
+                  >
                     Modifier mes informations
-                  </button>
+                  </SearchButton>
                 </div>
               </div>
             </div>
