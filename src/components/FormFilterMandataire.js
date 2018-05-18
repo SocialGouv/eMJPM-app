@@ -8,51 +8,64 @@ const FormFilterMandataire = ({ props }) => {
 		<Presentation>
 			<div style={{ marginLeft: "5px" }}>
 				<Title> Rechercher par lieu de rattachement </Title>
-				<td className="form-inline">
-					<tr>
+				<tr className="form-inline">
+					<td>
 						<FormInput
 							size="120"
 							id="code_postal"
 							name="code_postal"
 							placeholder="Code postal"
 						/>
-					</tr>
-					<tr>
-						<FormInput size="260" id="commune" name="commune" placeholder="Commune" />
-					</tr>
-				</td>
+					</td>
+					<td>
+						<FormInput
+							size="260"
+							id="commune"
+							name="commune"
+							placeholder="Commune"
+						/>
+					</td>
+				</tr>
 				<Title> Rechercher par zone d'intervention </Title>
-				<td className="form-inline">
-					<tr>
+				<tr className="form-inline">
+					<td>
 						<FormInput
 							size="120"
 							id="code_postal"
 							name="code_postal"
 							placeholder="Code postal"
 						/>
-					</tr>
-					<tr>
-						<FormInput size="260" id="commune" name="commune" placeholder="Commune" />
-					</tr>
-				</td>
+					</td>
+					<td>
+						<FormInput
+							size="260"
+							id="commune"
+							name="commune"
+							placeholder="Commune"
+						/>
+					</td>
+				</tr>
 
 				<Title> Rechercher par professionnel </Title>
 
-				<td className="form-inline">
-					<tr>
+				<tr className="form-inline">
+					<td>
 						<FormInput
 							size="385"
 							id="nameOrService"
 							name="nameOrService"
 							placeholder="Nom de la personne ou du service"
 						/>
-					</tr>
+					</td>
 
 					<div
 						className="custom-control custom-radio custom-control-inline"
 						style={{ marginLeft: "20px" }}
 					>
-						<label style={{ cursor: "pointer" }} for="customRadioInline1">
+						<label
+							style={{ cursor: "pointer" }}
+							for="customRadioInline1"
+						>
 							<input
 								type="radio"
 								id="customRadioInline1"
@@ -62,7 +75,10 @@ const FormFilterMandataire = ({ props }) => {
 						</label>
 					</div>
 					<div className="custom-control custom-radio custom-control-inline">
-						<label style={{ cursor: "pointer" }} for="customRadioInline2">
+						<label
+							style={{ cursor: "pointer" }}
+							for="customRadioInline2"
+						>
 							<input
 								type="radio"
 								id="customRadioInline2"
@@ -72,7 +88,10 @@ const FormFilterMandataire = ({ props }) => {
 						</label>
 					</div>
 					<div className="custom-control custom-radio custom-control-inline">
-						<label style={{ cursor: "pointer" }} for="customRadioInline3">
+						<label
+							style={{ cursor: "pointer" }}
+							for="customRadioInline3"
+						>
 							<input
 								type="radio"
 								id="customRadioInline3"
@@ -81,9 +100,13 @@ const FormFilterMandataire = ({ props }) => {
 							/>Services
 						</label>
 					</div>
-				</td>
+				</tr>
 
-				<SearchButton align="center" type="submit" style={{ marginTop: "20px" }}>
+				<SearchButton
+					align="center"
+					type="submit"
+					style={{ marginTop: "20px" }}
+				>
 					Rechercher
 				</SearchButton>
 			</div>

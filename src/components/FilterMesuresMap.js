@@ -5,8 +5,8 @@ import FormInput from "./FormInput";
 
 const FilterMesuresMap = ({ props }) => (
     <Presentation>
-        <td className="form-inline">
-            <tr>
+        <tr className="form-inline">
+            <td>
                 <FormInput
                     padd="10"
                     size="120"
@@ -14,11 +14,17 @@ const FilterMesuresMap = ({ props }) => (
                     name="code_postal"
                     placeholder="Code postal"
                 />
-            </tr>
-            <tr>
-                <FormInput padd="10" size="260" id="commune" name="commune" placeholder="Commune" />
-            </tr>
-            <tr>
+            </td>
+            <td>
+                <FormInput
+                    padd="10"
+                    size="260"
+                    id="commune"
+                    name="commune"
+                    placeholder="Commune"
+                />
+            </td>
+            <td>
                 <FormInput
                     padd="10"
                     size="260"
@@ -26,13 +32,13 @@ const FilterMesuresMap = ({ props }) => (
                     name="nom_etablissement"
                     placeholder="Nom d'établissement"
                 />
-            </tr>
-            <tr>
+            </td>
+            <td>
                 <SearchButton align="center" type="submit">
                     Rechercher
                 </SearchButton>
-            </tr>
-        </td>
+            </td>
+        </tr>
     </Presentation>
 );
 
