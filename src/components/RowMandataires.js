@@ -12,7 +12,13 @@ const getColorFromDisponibilite = dispo => {
 const Cell = ({ style, title, children }) => (
   <td
     className="pagination-centered"
-    style={{ fontSize: "1em", textAlign: "left", verticalAlign: "middle", ...style }}
+    style={{
+      fontSize: "1em",
+      textAlign: "left",
+      verticalAlign: "middle",
+      fontWeight: "bold",
+      ...style
+    }}
     title={title}
   >
     {children}
@@ -65,29 +71,40 @@ const RowMandataire = ({ mandataire, showDetails, onClick }) => {
   return (
     <tr onClick={onClick} style={{ cursor: "pointer" }}>
       <Cell style={{ width: "7%" }}>
-        <Circle style={{ backgroundColor: getColorFromDisponibilite(dispo_max - disponibilite) }}>
+        <Circle
+          style={{
+            backgroundColor: getColorFromDisponibilite(
+              dispo_max - disponibilite
+            )
+          }}
+        >
           {" "}
           {type.toUpperCase().substr(0, 1)}
         </Circle>
       </Cell>
 
       <Cell style={{ width: "25%" }}>
-        <b style={{ width: "250px", verticalAlign: "middle" }}>
+        <p style={{ width: "250px", verticalAlign: "middle" }}>
           {referent} - {etablissement}
-        </b>
+        </p>
         <br /> <div style={{ color: "#808080" }}>{type.toUpperCase()} </div>
       </Cell>
 
       {showDetails && (
         <Cell style={{ width: "33%", textAlign: "center" }}>
-          <b>
+          <p>
             {code_postal} - {ville}
-          </b>
+          </p>
         </Cell>
       )}
       <td
         align="right"
-        style={{ width: "33%", fontSize: "0.8em", verticalAlign: "middle", alignContent: "right" }}
+        style={{
+          width: "33%",
+          fontSize: "0.8em",
+          verticalAlign: "middle",
+          alignContent: "right"
+        }}
       >
         <PillDispo dispo={disponibilite} dispo_max={dispo_max} />
       </td>
