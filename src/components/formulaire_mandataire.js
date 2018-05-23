@@ -7,27 +7,7 @@ import piwik from "../piwik";
 import apiFetch from "./Api";
 import RowModal from "./RowModal";
 import SearchButton from "./SearchButton";
-
-const ExitButton = styled.button`
-  cursor: pointer;
-  margin: 5px;
-  background-color: grey;
-  color: white;
-  font-weight: bold;
-  border-radius: 50%;
-  border: 1px solid;
-  border-color: grey;
-  box-shadow: 0px 0px 0px grey;
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  &:hover {
-    background-color: red;
-    border-color: red;
-    box-shadow: 0px 0px 0px red;
-  }
-`;
+import ExitButton from "./ExitButton";
 
 const ModalInformation = styled(Modal)`
   position: absolute;
@@ -246,10 +226,7 @@ class FormulaireMandataire extends React.Component {
                   {this.props.currentMandataireModal.secretariat} -{" "}
                   {this.props.currentMandataireModal.nb_secretariat} <br />
                   <br />
-                  <SearchButton
-                    className={"btn btn-dark"}
-                    onClick={this.openModal}
-                  >
+                  <SearchButton onClick={this.openModal}>
                     Modifier mes informations
                   </SearchButton>
                 </div>

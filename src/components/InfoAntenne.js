@@ -1,14 +1,31 @@
 import styled from "styled-components";
 import SearchButton from "./SearchButton";
+import ExitButton from "./ExitButton";
+import Modal from "react-modal";
+import Form from "react-jsonschema-form";
+import fetch from "isomorphic-fetch";
+import apiFetch from "./Api";
 
-const JSONSchema = {
+const ModalInformation = styled(Modal)`
+	position: absolute;
+	width: 900px !important;
+	height: 450px !important;
+	background-color: white;
+	opacity: 1 !important;
+	overflow: auto;
+	div.form-group {
+		vertical-align: top;
+	}
+`;
+
+const schema = {
 	title: "Modifier les informations de cette antenne",
 	type: "object",
 	required: [
 		"nom1",
 		"prenom1",
-		"poste1",
 		"telephone1",
+		"telephone_portable1",
 		"email1",
 		"adresse1",
 		"code_postal1",
@@ -21,21 +38,71 @@ const JSONSchema = {
 		prenom1: { type: "string", title: "Prénom", default: "" },
 		poste1: { type: "string", title: "Poste", default: "" },
 		telephone1: { type: "string", title: "Téléphone", default: "" },
-		telephone_portable1: { type: "string", title: "Téléphone Portable", default: "" },
+		telephone_portable1: {
+			type: "string",
+			title: "Téléphone Portable",
+			default: ""
+		},
 		email1: { type: "string", title: "Adresse email", default: "" },
 		adresse1: { type: "string", title: "Rue", default: "" },
 		code_postal1: { type: "string", title: "Code Postal", default: "" },
 		ville1: { type: "string", title: "Commune", default: "" },
-		dispo_max1: { type: "string", title: "Nombre de mesures souhaitées", default: "" },
-		disponibilite1: { type: "string", title: "Nombre de mesures", default: "" },
-		secretariat1: { type: "string", title: "Secretariat", default: "" },
-		nb_secretariat1: { type: "string", title: "Secrétariat : nombre d'ETP", default: "" }
+		dispo_max1: {
+			type: "integer",
+			title: "Nombre de mesures souhaitées",
+			default: ""
+		},
+		disponibilite1: {
+			type: "integer",
+			title: "Nombre de mesures",
+			default: ""
+		}
 	}
 };
 const uiSchema = {
-	Nom: {
-		"ui:autofocus": true,
-		"ui:placeholder": "Nom"
+	nom1: {
+		"ui:placeholder": "Nom",
+		"ui:autofocus": true
+	},
+	prenom1: {
+		"ui:placeholder": "Prenom",
+		"ui:autofocus": true
+	},
+	poste1: {
+		"ui:placeholder": "Poste",
+		"ui:autofocus": true
+	},
+	telephone1: {
+		"ui:placeholder": "Téléphone",
+		"ui:autofocus": true
+	},
+	telephone_portable1: {
+		"ui:placeholder": "Téléphone Portable",
+		"ui:autofocus": true
+	},
+	email1: {
+		"ui:placeholder": "Email",
+		"ui:autofocus": true
+	},
+	adresse1: {
+		"ui:placeholder": "Adresse",
+		"ui:autofocus": true
+	},
+	code_postal1: {
+		"ui:placeholder": "Code Postal",
+		"ui:autofocus": true
+	},
+	ville1: {
+		"ui:placeholder": "Ville",
+		"ui:autofocus": true
+	},
+	dispo_max1: {
+		"ui:placeholder": "Nombre de mesures souhaitées",
+		"ui:autofocus": true
+	},
+	disponibilite1: {
+		"ui:placeholder": "Nombre de mesures en cours",
+		"ui:autofocus": true
 	}
 };
 
@@ -52,7 +119,7 @@ const customStyles = {
 	}
 };
 
-const Test = styled.p`
+const InformationsAntenne = styled.p`
 	margin-bottom: 0;
 `;
 
@@ -65,23 +132,34 @@ class InfoAntenne extends React.Component {
 	};
 
 	onSubmit = ({ formData }) => {
-		apiFetch(`/mandataires/1`, {
+		console.log("erreur 1");
+
+		apiFetch(`/serviceAntenne/1`, {
 			method: "PUT",
 			body: JSON.stringify({
-				nom: formData.nom1,
-				prenom: formData.prenom1,
-				telephone: formData.telephone1,
-				telephone_portable: formData.telephone_portable1,
-				email: formData.email1,
-				adresse: formData.adresse1,
-				code_postal: formData.code_postal1,
-				ville: formData.ville1,
-				dispo_max: formData.dispo_max1,
-				secretariat: formData.secretariat1,
-				nb_secretariat: formData.nb_secretariat1,
-				disponibilite: formData.disponibilite1
+				nom: formData.nom1 || "",
+				prenom: formData.prenom1 || "",
+				poste: formData.poste1 || "",
+				telephone: formData.telephone1 || "",
+				telephone_portable: formData.telephone_portable1 || "",
+				email: formData.email1 || "",
+				adresse: formData.adresse1 || "",
+				code_postal: formData.code_postal1 || "",
+				ville: formData.ville1 || "",
+				dispo_max: formData.dispo_max1 || 0,
+				disponibilite: formData.disponibilite1 || 0
 			})
 		}).then(json => {
+			if (
+				formData.dispo_max1 !==
+				this.props.currentMandataireModal.dispo_max
+			) {
+				piwik.push([
+					"trackEvent",
+					"mesures",
+					"Modification du nombre de mesures souhaitées par un service"
+				]);
+			}
 			this.props.updateMadataire(json);
 		});
 		this.closeModal();
@@ -97,64 +175,75 @@ class InfoAntenne extends React.Component {
 
 	render() {
 		const formData = {
-			// nom1: `${this.props.currentMandataireModal.nom}`,
-			// prenom1: `${this.props.currentMandataireModal.prenom}`,
-			// poste1: `${this.props.currentMandataireModal.poste}`,
-			// telephone1: `${this.props.currentMandataireModal.telephone}`,
-			// telephone_portable1: `${this.props.currentMandataireModal.telephone_portable}`,
-			// ville1: `${this.props.currentMandataireModal.ville}`,
-			// adresse1: `${this.props.currentMandataireModal.adresse}`,
-			// secretariat1: `${this.props.currentMandataireModal.secretariat}`,
-			// nb_secretariat1: `${this.props.currentMandataireModal.nb_secretariat}`,
-			// email1: `${this.props.currentMandataireModal.email}`,
-			// code_postal1: `${this.props.currentMandataireModal.code_postal}`,
-			// dispo_max1: `${this.props.currentMandataireModal.dispo_max}`,
-			// disponibilite1: `${this.props.currentMandataireModal.disponibilite}`
-
-			nom1: "Martin2",
-			prenom1: "Martin1",
-			poste1: "chef",
-			telephone1: "0612000000",
-			telephone_portable1: "0600000000",
-			ville1: "Martinville",
-			adresse1: "1 rue martin",
-			secretariat1: "",
-			nb_secretariat1: "",
-			email1: "martin.martin@martin.fr",
-			code_postal1: "00000",
-			dispo_max1: 150,
-			disponibilite1: 200
+			nom1: this.props.currentMandataireModal.nom,
+			prenom1: this.props.currentMandataireModal.prenom,
+			poste1: this.props.currentMandataireModal.poste,
+			telephone1: this.props.currentMandataireModal.telephone,
+			telephone_portable1: this.props.currentMandataireModal
+				.telephone_portable,
+			ville1: this.props.currentMandataireModal.ville,
+			adresse1: this.props.currentMandataireModal.adresse,
+			email1: this.props.currentMandataireModal.email,
+			code_postal1: this.props.currentMandataireModal.code_postal,
+			dispo_max1: this.props.currentMandataireModal.dispo_max,
+			disponibilite1: this.props.currentMandataireModal.disponibilite
 		};
 		return (
 			<div>
 				<div className="container" style={{ marginTop: "30px" }}>
-					<h3> Antenne de Ville </h3>
+					<h3>
+						{" "}
+						Antenne de {
+							this.props.currentMandataireModal.ville
+						}{" "}
+					</h3>
 					<br />
 					<strong>Contact</strong>
-					<Test>
-						{/*
+					<InformationsAntenne>
 						{this.props.currentMandataireModal.prenom}{" "}
 						{this.props.currentMandataireModal.nom} -{" "}
-						{this.props.currentMandataireModal.poste}*/}
-						{prenom1} {nom1}-{poste1}
-					</Test>
-					<Test>05 59 01 02 03</Test>
-					<Test>06 06 06 06 06</Test>
-					<Test>martin.martin@martin.fr</Test>
+						{this.props.currentMandataireModal.poste}
+					</InformationsAntenne>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.type.toUpperCase()}
+					</InformationsAntenne>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.telephone}
+					</InformationsAntenne>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.telephone_portable}
+					</InformationsAntenne>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.email}
+					</InformationsAntenne>
 					<br />
 					<strong>Adresse</strong>
-					<Test>1 rue Martin</Test>
-					<Test>00000 - Martinville</Test>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.adresse}
+					</InformationsAntenne>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.ville} <br />
+						{this.props.currentMandataireModal.code_postal}
+					</InformationsAntenne>
 					<br />
-					<strong>Tribunal d'instance de l'antenne</strong>
-					<Test>Dunkerque</Test>
+					{/*<strong>Tribunal d'instance de l'antenne</strong>
+					<InformationsAntenne>Dunkerque</InformationsAntenne>
+					<br />*/}
+					<strong>Nombre de mesures en cours pour l'antenne</strong>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.disponibilite}
+					</InformationsAntenne>
 					<br />
 					<strong>Nombre de mesures souhaitées pour l'antenne</strong>
-					<Test>250</Test>
+					<InformationsAntenne>
+						{this.props.currentMandataireModal.dispo_max}
+					</InformationsAntenne>
 					<br />
-					<SearchButton onClick={this.openModal}>Modifier</SearchButton>
+					<SearchButton onClick={this.openModal}>
+						Modifier
+					</SearchButton>
 				</div>
-				<Modal
+				<ModalInformation
 					isOpen={this.state.modalIsOpen}
 					onRequestClose={this.closeModal}
 					contentLabel="Antenne"
@@ -163,12 +252,25 @@ class InfoAntenne extends React.Component {
 					className="ModalInformation"
 					overlayClassName="OverlayInput"
 				>
-					<Form schema={schema} formData={formData} onSubmit={this.onSubmit}>
-						<div style={{ textAlign: "left", paddingBottom: "10px" }}>
-							<SearchButton type="submit">Enregistrer</SearchButton>
+					<ExitButton onClick={this.closeModal}>X</ExitButton>
+					<Form
+						schema={schema}
+						formData={formData}
+						onSubmit={this.onSubmit}
+					>
+						<div
+							style={{
+								textAlign: "left",
+								paddingBottom: "10px",
+								marginLeft: "20px"
+							}}
+						>
+							<SearchButton type="submit">
+								Enregistrer
+							</SearchButton>
 						</div>
 					</Form>
-				</Modal>
+				</ModalInformation>
 			</div>
 		);
 	}

@@ -22,7 +22,7 @@ const antenne2 = {
 const TableMesureByAntenne = () => {
 	return (
 		<div style={{ height: "auto", width: "auto" }}>
-			<table class="table">
+			<table className="table">
 				<thead style={{ fontWeight: "16px" }}>
 					<tr>
 						<th scope="col" style={{ textAlign: "left" }}>
