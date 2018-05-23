@@ -76,53 +76,6 @@
     height: 40px;
     display: inline-block;
 }
-.Modal {
-    position: absolute;
-    width: 900px !important;
-    height: 700px !important;
-    top: 60px;
-    left: 60px;
-    right: 60px;
-    bottom: 60px;
-    background-color: #f2f2f2;
-}
-
-.ModalInformation {
-    position: absolute;
-    width: 900px !important;
-    height: 450px !important;
-    top: 60px;
-    left: 60px;
-    right: 60px;
-    bottom: 60px;
-    background-color: #f2f2f2;
-    overflow: scroll;
-    opacity: 2;
-}
-.ModalMesure {
-    position: absolute;
-    width: 20% !important;
-    height: 20% !important;
-    top: 40%;
-    left: 40%;
-    right: 60px;
-    bottom: 60px;
-    background-color: #f2f2f2;
-    overflow: scroll;
-    opacity: 2;
-}
-.ModalInputMesure {
-    position: absolute;
-    width: 450px !important;
-    height: 400px !important;
-    top: 60px;
-    left: 60px;
-    right: 60px;
-    bottom: 60px;
-    background-color: #f2f2f2;
-    overflow: scroll;
-    opacity: 2;
-}
 
 .Overlay {
     position: fixed;
@@ -132,7 +85,7 @@
     bottom: 0;
     background-color: grey;
     z-index: 9000;
-    opacity: 0.96;
+    background-opacity: 0.96;
 }
 .OverlayInput {
     position: fixed;
@@ -140,9 +93,45 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: grey;
-    opacity: 0.96;
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 9000;
+}
+
+.Modal {
+    position: absolute;
+    width: 1024px !important;
+    height: 600px !important;
+    top: 60px;
+    left: 60px;
+    right: 60px;
+    bottom: 60px;
+    background-color: #f2f2f2;
+    opacity: 1;
+}
+
+.ModalMesure {
+    position: absolute;
+    width: 20% !important;
+    height: 20% !important;
+    top: 40%;
+    left: 40%;
+    right: 60px;
+    bottom: 60px;
+    background-color: white;
+    overflow: scroll;
+    opacity: 1;
+}
+.ModalInputMesure {
+    position: absolute;
+    width: 450px !important;
+    height: 400px !important;
+    top: 60px;
+    left: 60px;
+    right: 60px;
+    bottom: 60px;
+    background-color: green;
+    overflow: scroll;
+    opacity: 2;
 }
 
 .leaflet-container {
@@ -155,7 +144,7 @@
     background-position: center center;
 }
 .react-tabs__tab--selected {
-    border-color: white !important;
+    background: white !important;
     color: black !important;
 }
 .react-tabs__tab {
@@ -228,23 +217,23 @@
 #root_civilite {
     width: 123px;
 }
-.react-tabs__tab {
+/*.react-tabs__tab {
     text-align: center;
     height: 60px;
-    color: #cad4de !important;
+    color: black !important;
     background-color: #ebeff2 !important;
     border-radius: 0px !important;
     border: 0px !important;
-}
+}*/
 .react-tabs__tab-list {
     margin-bottom: 0px !important;
     background-color: #cad4de !important;
     border: 0px !important;
 }
-.react-tabs__tab--selected {
-    color: black !important;
+/*.react-tabs__tab--selected {
+    background-color: #ffffff !important;
 }
-
+*/
 .form-group {
     padding-left: 10px;
     text-align: left;

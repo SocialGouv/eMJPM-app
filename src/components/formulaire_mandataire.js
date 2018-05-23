@@ -1,14 +1,42 @@
 import fetch from "isomorphic-fetch";
 import Modal from "react-modal";
 import Form from "react-jsonschema-form";
+import styled from "styled-components";
 
+import piwik from "../piwik";
 import apiFetch from "./Api";
 import RowModal from "./RowModal";
+import SearchButton from "./SearchButton";
+import ExitButton from "./ExitButton";
+
+const ModalInformation = styled(Modal)`
+  position: absolute;
+  width: 900px !important;
+  height: 450px !important;
+  background-color: white;
+  opacity: 1 !important;
+  overflow: auto;
+  div.form-group {
+    vertical-align: top;
+  }
+`;
 
 const schema = {
   title: "Modifier vos informations",
   type: "object",
-  required: [],
+  required: [
+    "nom",
+    "prenom",
+    "telephone",
+    "telephone_portable",
+    "email",
+    "adresse",
+    "code_postal",
+    "ville",
+    "dispo_max",
+    "secretariat",
+    "nb_secretariat"
+  ],
   properties: {
     nom: { type: "string", title: "Nom", default: "" },
     prenom: { type: "string", title: "Prénom", default: "" },
@@ -23,12 +51,20 @@ const schema = {
     code_postal: { type: "string", title: "Code Postal", default: "" },
     ville: { type: "string", title: "Commune", default: "" },
     dispo_max: {
-      type: "string",
+      type: "integer",
       title: "Nombre de mesures souhaitées",
       default: ""
     },
-    secretariat: { type: "boolean", title: "Secretariat", enumNames: ["Oui", "Non"] },
-    nb_secretariat: { type: "string", title: "Secrétariat : nombre d'ETP", default: "" }
+    secretariat: {
+      type: "boolean",
+      title: "Secretariat",
+      enumNames: ["Oui", "Non"]
+    },
+    nb_secretariat: {
+      type: "integer",
+      title: "Secrétariat : nombre d'ETP",
+      default: ""
+    }
   }
 };
 
@@ -88,8 +124,6 @@ const uiSchema = {
   // }
 };
 
-const formData = {};
-
 class FormulaireMandataire extends React.Component {
   state = {
     data: [],
@@ -102,19 +136,27 @@ class FormulaireMandataire extends React.Component {
     apiFetch(`/mandataires/1`, {
       method: "PUT",
       body: JSON.stringify({
-        nom: formData.nom,
-        prenom: formData.prenom,
-        telephone: formData.telephone,
-        telephone_portable: formData.telephone_portable,
-        email: formData.email,
-        adresse: formData.adresse,
-        code_postal: formData.code_postal,
-        ville: formData.ville,
-        dispo_max: formData.dispo_max,
+        nom: formData.nom || "",
+        prenom: formData.prenom || "",
+        telephone: formData.telephone || "",
+        telephone_portable: formData.telephone_portable || "",
+        email: formData.email || "",
+        adresse: formData.adresse || "",
+        code_postal: formData.code_postal || "",
+        ville: formData.ville || "",
+        dispo_max: formData.dispo_max || 0,
         secretariat: formData.secretariat,
-        nb_secretariat: formData.nb_secretariat
+        nb_secretariat: formData.nb_secretariat || 0
       })
     }).then(json => {
+      if (formData.dispo_max !== this.props.currentMandataireModal.dispo_max) {
+        piwik.push([
+          "trackEvent",
+          "mesures",
+          "Modification du nombre de mesures souhaitées par un mandataire"
+        ]);
+      }
+
       this.props.updateMadataire(json);
     });
     this.closeModal();
@@ -129,17 +171,17 @@ class FormulaireMandataire extends React.Component {
 
   render() {
     const formData = {
-      nom: `${this.props.currentMandataireModal.nom}`,
-      prenom: `${this.props.currentMandataireModal.prenom}`,
-      telephone: `${this.props.currentMandataireModal.telephone}`,
-      telephone_portable: `${this.props.currentMandataireModal.telephone_portable}`,
-      ville: `${this.props.currentMandataireModal.ville}`,
-      adresse: `${this.props.currentMandataireModal.adresse}`,
-      secretariat: `${this.props.currentMandataireModal.secretariat}`,
-      nb_secretariat: `${this.props.currentMandataireModal.nb_secretariat}`,
-      email: `${this.props.currentMandataireModal.email}`,
-      code_postal: `${this.props.currentMandataireModal.code_postal}`,
-      dispo_max: `${this.props.currentMandataireModal.dispo_max}`
+      nom: this.props.currentMandataireModal.nom,
+      prenom: this.props.currentMandataireModal.prenom,
+      telephone: this.props.currentMandataireModal.telephone,
+      telephone_portable: this.props.currentMandataireModal.telephone_portable,
+      ville: this.props.currentMandataireModal.ville,
+      adresse: this.props.currentMandataireModal.adresse,
+      secretariat: this.props.currentMandataireModal.secretariat,
+      nb_secretariat: this.props.currentMandataireModal.nb_secretariat,
+      email: this.props.currentMandataireModal.email,
+      code_postal: this.props.currentMandataireModal.code_postal,
+      dispo_max: this.props.currentMandataireModal.dispo_max
     };
     return (
       <div className="container">
@@ -153,12 +195,13 @@ class FormulaireMandataire extends React.Component {
                     {this.props.currentMandataireModal.nom}
                   </b>
                   <br />
-                  {this.props.currentMandataireModal.type.toUpperCase()}
+                  {this.props.currentMandataireModal.type}
                   <br />
                   <br />
                   <b>Contact</b>
                   <br />
-                  {this.props.currentMandataireModal.prenom} {this.props.currentMandataireModal.nom}
+                  {this.props.currentMandataireModal.prenom}{" "}
+                  {this.props.currentMandataireModal.nom}
                   <br />
                   {this.props.currentMandataireModal.telephone}
                   <br />
@@ -183,33 +226,41 @@ class FormulaireMandataire extends React.Component {
                   {this.props.currentMandataireModal.secretariat} -{" "}
                   {this.props.currentMandataireModal.nb_secretariat} <br />
                   <br />
-                  <button className={"btn btn-dark"} onClick={this.openModal}>
+                  <SearchButton onClick={this.openModal}>
                     Modifier mes informations
-                  </button>
+                  </SearchButton>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        <Modal
+        <ModalInformation
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="mandataire"
           background="#e9ecef"
           style={customStyles}
-          className="ModalInformation"
           overlayClassName="OverlayInput"
         >
-          <button onClick={this.closeModal}>X</button>
-          <Form schema={schema} formData={formData} uiSchema={uiSchema} onSubmit={this.onSubmit}>
-            <div style={{ textAlign: "left", paddingBottom: "10px", marginLeft: "20px" }}>
-              <button type="submit" className="btn btn-success">
-                Enregistrer
-              </button>
+          <ExitButton onClick={this.closeModal}>X</ExitButton>
+          <Form
+            schema={schema}
+            formData={formData}
+            uiSchema={uiSchema}
+            onSubmit={this.onSubmit}
+          >
+            <div
+              style={{
+                textAlign: "left",
+                paddingBottom: "10px",
+                marginLeft: "20px"
+              }}
+            >
+              <SearchButton type="submit">Enregistrer</SearchButton>
             </div>
           </Form>
-        </Modal>
+        </ModalInformation>
       </div>
     );
   }

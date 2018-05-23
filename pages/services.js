@@ -6,6 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import FormulaireService from "../src/components/formulaireService";
 import apiFetch from "../src/components/Api";
 import Router from "next/router";
+import AntenneIndex from "../src/components/AntenneIndex";
 
 const logo = require("!!url-loader?limit=0!../static/images/logo_emjpm.png");
 
@@ -50,7 +51,8 @@ class MandatairesIndex extends React.Component {
   render() {
     const filteredMesures = this.state.datamesure;
     return (
-      <Tabs>
+      <AntenneIndex />
+      /* <Tabs>
         <TabList>
           <div
             className="panel"
@@ -62,10 +64,14 @@ class MandatairesIndex extends React.Component {
             }}
           >
             <div className="panel__container" style={{ paddingBottom: "0px" }}>
-              <div className="container" style={{ paddingRight: "0px", paddingLeft: "0px" }}>
+              <div
+                className="container"
+                style={{ paddingRight: "0px", paddingLeft: "0px" }}
+              >
                 <h2 style={{ color: "black" }}>
                   {" "}
-                  {this.state.currentMandataire.nom} {this.state.currentMandataire.prenom}{" "}
+                  {this.state.currentMandataire.nom}{" "}
+                  {this.state.currentMandataire.prenom}{" "}
                 </h2>
                 <div
                   style={{
@@ -80,7 +86,10 @@ class MandatairesIndex extends React.Component {
             </div>
           </div>
         </TabList>
-        <div className="container" style={{ backgroundColor: "white", minHeight: "70vh" }}>
+        <div
+          className="container"
+          style={{ backgroundColor: "white", minHeight: "70vh" }}
+        >
           <TabPanel>
             <div style={{ minHeight: "70vh", paddingTop: "10px" }}>
               <FormulaireService
@@ -90,7 +99,7 @@ class MandatairesIndex extends React.Component {
             </div>
           </TabPanel>
         </div>
-      </Tabs>
+      </Tabs>*/
     );
   }
 }
