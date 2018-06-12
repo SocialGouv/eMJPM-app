@@ -3,26 +3,17 @@ import apiFetch from "./Api";
 import styled from "styled-components";
 import FormInputMesure from "./FormInputMesures";
 import getPostCodeCoordinates from "./GetPostCodeCoordinates";
-
-const CancelButton = styled.button`
-  cursor: pointer;
-  margin-left: 10px;
-`;
-
-const CancelX = styled.button`
-  cursor: pointer;
-  margin-left: 10px;
-  content-align: right;
-  color: grey;
-  padding: 0px;
-  font-size: 1.3em;
-`;
-
-const CancelButtonX = styled.div`
-  text-align: "right";
-`;
+import ExitButton from "./ExitButton";
 
 const formData = {};
+
+const ModalPres = styled.div`
+  padding: 15px;
+  margin-right: 25px;
+  border: 1px solid black;
+  background: #f9f9f9;
+  border-radius: 5px;
+`;
 
 export const FormMesure = ({
   OpenCreationMesure,
@@ -36,30 +27,28 @@ export const FormMesure = ({
 }) => (
   <div>
     <button
+      style={{ display: "inline" }}
       type="button"
       className="btn btn-success mesure_button"
       onClick={OpenCreationMesure}
       style={hideShow}
     >
-      Ouvrir une mesure
+      Enregistrer une nouvelle mesure
     </button>
 
     <div style={showHide}>
-      <CancelButtonX>
-        <CancelX onClick={OpenCreationMesure} className="btn btn-link">
-          X
-        </CancelX>
-      </CancelButtonX>
-      <div style={{ width: "600px" }}>
-        <FormInputMesure
-          CustomFieldTemplate={CustomFieldTemplate}
-          formData={formData}
-          onSubmit={onSubmit}
-          showReplyForm={OpenCreationMesure}
-          error={error}
-          status={status}
-        />
-      </div>
+      <ModalPres>
+        <div style={{ width: "600px" }}>
+          <FormInputMesure
+            CustomFieldTemplate={CustomFieldTemplate}
+            formData={formData}
+            onSubmit={onSubmit}
+            showReplyForm={OpenCreationMesure}
+            error={error}
+            status={status}
+          />
+        </div>
+      </ModalPres>
     </div>
   </div>
 );
@@ -68,7 +57,8 @@ class MesureInput extends React.Component {
   state = {
     showForm: false,
     error: null,
-    status: null
+    status: null,
+    success: null
   };
 
   onSubmit = ({ formData }) => {
