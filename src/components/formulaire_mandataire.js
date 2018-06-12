@@ -29,7 +29,7 @@ const schema = {
       default: ""
     },
     secretariat: { type: "boolean", title: "Secretariat", enumNames: ["Oui", "Non"] },
-    nb_secretariat: { type: "integer", title: "Secrétariat : nombre d'ETP", default: "" }
+    nb_secretariat: { type: "number", title: "Secrétariat : nombre d'ETP", default: "" }
   }
 };
 
@@ -106,12 +106,14 @@ const FormulaireMandataireView = ({
                 {formData.prenom} {formData.nom}
               </b>
               <br />
-              {formData.type.toUpperCase()}
+              {/*{formData.type.toUpperCase()}*/}
               <br />
               <br />
               <b>Contact</b>
               <br />
               {formData.prenom} {formData.nom}
+              <br />
+              {formData.email}
               <br />
               {formData.telephone}
               <br />
