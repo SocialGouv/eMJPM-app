@@ -1,10 +1,22 @@
+// @flow
 import styled from "styled-components";
 import { AlertCircle } from "react-feather";
 import * as React from "react";
 
 import isOlderThanOneMonth from "../communComponents/checkDate";
 
-const getColorFromDisponibilite = dispo => {
+type PillDispoType = {
+  dispo: number,
+  dispo_max: number
+};
+
+type CellType = {
+  style?: { [string]: string },
+  title?: string,
+  children?: React.Node
+};
+
+const getColorFromDisponibilite = (dispo: number): string => {
   if (dispo >= 1) {
     return "#f05659";
   } else if (dispo >= 0.85) {
@@ -13,7 +25,7 @@ const getColorFromDisponibilite = dispo => {
   return "#43b04a";
 };
 
-const Cell = ({ style, title, children }) => (
+const Cell = ({ style, title, children }: CellType) => (
   <td
     className="pagination-centered"
     style={{ fontSize: "0.8em", textAlign: "left", verticalAlign: "middle", ...style }}
@@ -23,7 +35,7 @@ const Cell = ({ style, title, children }) => (
   </td>
 );
 
-export const PillDispo = ({ dispo, dispo_max }) => (
+export const PillDispo = ({ dispo, dispo_max }: PillDispoType) => (
   <div
     style={{
       margin: "0 auto",
@@ -49,17 +61,14 @@ export const Circle = styled.div`
   border-radius: 50%;
   display: inline-block;
 `;
-class TableRowMandataire extends React.Component {
-  state = {
-    timer: "inline-block"
-  };
 
-  updateTimer = time => {
-    this.setState({ timer: time });
-  };
+type Props = {
+  onClick: SyntheticMouseEvent<HTMLButtonElement>,
+  mandataire: Object
+};
 
+class TableRowMandataire extends React.Component<Props> {
   render() {
-    //date-fns
     let isLate =
       this.props.mandataire.date_mesure_update &&
       isOlderThanOneMonth(this.props.mandataire.date_mesure_update.slice(0, 10));
@@ -75,14 +84,14 @@ class TableRowMandataire extends React.Component {
             {type.toUpperCase().substr(0, 1)}
           </Circle>
         </Cell>
-        <Cell style={{ verticalAlign: "middle" }}>
+        <Cell>
           <b>{etablissement}</b>
           <br /> <div style={{ color: "#cccccc" }}>{type.toUpperCase()} </div>
         </Cell>
-        <td style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }}>
+        <Cell style={{ textAlign: "center" }}>
           <PillDispo dispo={mesures_en_cours} dispo_max={dispo_max} />
-        </td>
-        <td style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }}>
+        </Cell>
+        <Cell style={{ textAlign: "center" }}>
           {isLate && (
             <span
               className="d-inline-block"
@@ -93,7 +102,7 @@ class TableRowMandataire extends React.Component {
               <AlertCircle />
             </span>
           )}
-        </td>
+        </Cell>
       </tr>
     );
   }
