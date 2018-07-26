@@ -91,7 +91,6 @@ const TableMandataire = ({ rows, openModal, updateFilters, updateTimer, display 
                 key={mandataire.telephone}
                 mandataire={mandataire}
                 onClick={() => openModal(mandataire)}
-                updateTimer={updateTimer}
               />
             ))}
         </tbody>

@@ -7,7 +7,12 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import Router from "next/router";
 import queryString from "query-string";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
 
+import rootReducer from "../src/reducers";
+import AddModalMandataire from "../src/containers/FicheMandataireModal";
 import Navigation from "../src/components/communComponents/Navigation";
 import RowModal from "../src/components/communComponents/RowModal";
 import Footer from "../src/components/communComponents/Footer";
@@ -42,6 +47,7 @@ const TabsShowMandataire = styled.div`
   background-color: #ebeff2;
   height: 60px;
 `;
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 const OpenStreeMap = dynamic({
   modules: props => ({
@@ -205,9 +211,6 @@ type State = {
   modalIsOpen: boolean,
   postcodeCoordinates: string,
   data: Array<mixed>,
-  searchTypeIn: string,
-  searchTypePr: string,
-  searchTypeSe: string,
   searchNom: string,
   searchVille: string,
   currentMandataire: string,
@@ -222,19 +225,16 @@ class Ti extends React.Component<Props, State> {
     datamesure: [],
     mandaMesures: [],
     manda: [],
+    currentEtablissementsForSelectedMandataire: [],
+    allTisForOneMandataire: [],
     searchType: "",
-    searchTypeIn: "",
-    searchTypePr: "",
-    searchTypeSe: "",
     searchNom: "",
     searchVille: "",
     currentMandataire: "",
-    currentEtablissementsForSelectedMandataire: [],
     modalIsOpen: false,
     postcodeCoordinates: "",
     specialite: "",
     value: "",
-    allTisForOneMandataire: [],
     timer: "inline-block"
   };
 
@@ -439,13 +439,18 @@ const TiView = ({
           updateTimer={updateTimer}
           mandataires={mandataires}
         />
-        <ModalMandataire isOpen={isOpen} closeModal={closeModal}>
-          <FicheMandataire
-            mandataire={mandataire}
-            currentEtablissementsForSelectedMandataire={currentEtablissementsForSelectedMandataire}
-            allTisForOneMandataire={allTisForOneMandataire}
-          />
-        </ModalMandataire>
+        <AddModalMandataire
+          currentEtablissementsForSelectedMandataire={currentEtablissementsForSelectedMandataire}
+          allTisForOneMandataire={allTisForOneMandataire}
+        />
+
+        {/*<ModalMandataire isOpen={isOpen} closeModal={closeModal}>*/}
+        {/*<FicheMandataire*/}
+        {/*mandataire={mandataire}*/}
+        {/*currentEtablissementsForSelectedMandataire={currentEtablissementsForSelectedMandataire}*/}
+        {/*allTisForOneMandataire={allTisForOneMandataire}*/}
+        {/*/>*/}
+        {/*</ModalMandataire>*/}
       </TabPanel>
       <TabPanel>
         <OpenStreeMapMandataires
@@ -478,15 +483,17 @@ const TiView = ({
   </div>
 );
 const TiPage = () => (
-  <div style={{ minHeight: "100%", backgroundColor: "#cad4de" }}>
-    <Navigation logout />
-    <div className="container">
-      <h1>Chercher au plus proche du majeur à protéger</h1>
-      <br />
+  <Provider store={store}>
+    <div style={{ minHeight: "100%", backgroundColor: "#cad4de" }}>
+      <Navigation logout />
+      <div className="container">
+        <h1>Chercher au plus proche du majeur à protéger</h1>
+        <br />
+      </div>
+      <Ti style={{ marginTop: "100%" }} />
+      <Footer />
     </div>
-    <Ti style={{ marginTop: "100%" }} />
-    <Footer />
-  </div>
+  </Provider>
 );
 
 export default TiPage;
