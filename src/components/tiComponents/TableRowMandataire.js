@@ -4,8 +4,8 @@ import { AlertCircle } from "react-feather";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { openModalAction } from "../../actions";
-import isOlderThanOneMonth from "../communComponents/checkDate";
+import { getInformationforTisAndEtablissementForOneMandataire } from "../../actions";
+import { isOlderThanOneMonth } from "../communComponents";
 
 type PillDispoType = {
   dispo: number,
@@ -59,16 +59,9 @@ export const PillDispo = ({ dispo, dispo_max }: PillDispoType) => (
 
 function mapDispatchToProps(dispatch) {
   return {
-    onModalOpen: manda => dispatch(openModalAction(manda))
+    getInformationforTisAndEtablissementForOneMandataire: mandataire =>
+      dispatch(getInformationforTisAndEtablissementForOneMandataire(mandataire, true))
   };
-}
-
-function mapStateToProps(state) {
-    console.log("hllo", state);
-
-    return {
-        openModal: state.modal.openModal
-    };
 }
 
 export const Circle = styled.div`
@@ -87,10 +80,15 @@ class TableRowMandataire extends React.Component<Props> {
     let isLate =
       this.props.mandataire.date_mesure_update &&
       isOlderThanOneMonth(this.props.mandataire.date_mesure_update.slice(0, 10));
-    const {onModalOpen} = this.props;
+    const { getInformationforTisAndEtablissementForOneMandataire } = this.props;
     const { type, etablissement, mesures_en_cours, dispo_max } = this.props.mandataire;
     return (
-      <tr onClick={() => onModalOpen(this.props.mandataire)} style={{ cursor: "pointer" }}>
+      <tr
+        onClick={() =>
+          getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)
+        }
+        style={{ cursor: "pointer" }}
+      >
         <Cell style={{ width: "100px" }}>
           <Circle
             style={{

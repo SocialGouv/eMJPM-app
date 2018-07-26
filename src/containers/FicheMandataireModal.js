@@ -7,12 +7,13 @@ import Commentaire from "../components/tiComponents/Commentaire";
 import RowModal from "../components/communComponents/RowModal";
 
 function mapStateToProps(state) {
-  console.log("hllo", state);
-
-  return { openModal: state.modal.openModal, currentMandataire: state.modal.currentMandataire };
-  // currentEtablissementsForSelectedMandataire:
-  //   state.modal.currentEtablissementsForSelectedMandataire,
-  // allTisForOneMandataire: state.modal.allTisForOneMandataire
+  return {
+    openModal: state.modal.openModal,
+    currentMandataire: state.modal.currentMandataire,
+    currentEtablissementsForSelectedMandataire:
+      state.modal.currentEtablissementsForSelectedMandataire,
+    allTisForOneMandataire: state.modal.allTisForOneMandataire
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -79,7 +80,6 @@ export const FicheMandataire = ({
   allTisForOneMandataire
 }) => (
   <div className="container">
-    {console.log("manda", mandataire)}
     <div className="row">
       <div className="col-6">
         <TitleMandataire>{mandataire.etablissement}</TitleMandataire>
