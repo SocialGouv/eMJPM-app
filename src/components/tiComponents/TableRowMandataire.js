@@ -19,7 +19,8 @@ type CellType = {
 };
 
 type Props = {
-  mandataire: Object
+  mandataire: Object,
+  getInformationforTisAndEtablissementForOneMandataire: SyntheticMouseEvent<HTMLButtonElement>
 };
 
 const getColorFromDisponibilite = (dispo: number): string => {

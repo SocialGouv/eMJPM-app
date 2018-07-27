@@ -1,11 +1,12 @@
+//@flow
+
 import React, { createRef } from "react";
 import styled from "styled-components";
 import { Map, CircleMarker, TileLayer } from "react-leaflet";
 
-import apiFetch from "../communComponents/Api";
-import TableMandataire from "./TableMandataire";
-import FilterMesuresMap from "./FilterMesuresMap";
-import getCenter from "../communComponents/getCenter";
+import { TableMandataire, FilterMesuresMap } from ".";
+import { apiFetch, getCenter } from "../communComponents";
+import { FiltersMandataireTableMap } from ".";
 
 const Title = styled.div`
   text-align: left;
@@ -35,7 +36,6 @@ export const MapsView = ({
   onMoveend,
   innerRef,
   filteredMesures,
-  openModal,
   mesureCount,
   updateFilters,
   zoomCodePostal,
@@ -96,12 +96,8 @@ export const MapsView = ({
                 <Title>
                   {mesureCount} Professionnel{(mesureCount > 1 && "s") || null}
                 </Title>
-
-                <TableMandataire
-                  rows={filteredMesures}
-                  openModal={openModal}
-                  updateFilters={updateFilters}
-                />
+                <FiltersMandataireTableMap updateFilters={updateFilters} />
+                <TableMandataire rows={filteredMesures} />
               </React.Fragment>
             )}
           </React.Fragment>

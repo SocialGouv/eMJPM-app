@@ -1,11 +1,12 @@
+//@flow
+
 import React, { createRef } from "react";
 import styled from "styled-components";
 import { Map, CircleMarker, TileLayer } from "react-leaflet";
 
-import apiFetch from "../communComponents/Api";
-import TableMandataire from "./TableMandataire";
-import FilterMesuresMap from "./FilterMesuresMap";
-import getCenter from "../communComponents/getCenter";
+import { TableMandataire, FilterMesuresMap } from ".";
+import { apiFetch, getCenter } from "../communComponents";
+import { FiltersMandataireTableMap } from ".";
 
 const Title = styled.div`
   text-align: left;
@@ -23,9 +24,11 @@ const MandatairesWidth = styled.div`
   background-color: white;
   margin-top: 10px;
   width: 37%;
+  max-height: 72vh;
+  overflow-y: scroll;
 `;
 
-export const MapsView = ({
+export const MapsViewMandataire = ({
   mandataires,
   zoom,
   width,
@@ -33,7 +36,6 @@ export const MapsView = ({
   onMoveend,
   innerRef,
   filteredMandataires,
-  openModal,
   updateFilters,
   zoomCodePostal,
   getPostCodeCoordinates,
@@ -94,11 +96,8 @@ export const MapsView = ({
               {mandataireCount} Professionnel{(mandataireCount > 1 && "s") || null}
             </Title>
             <div style={{ maxHeight: "60vh", overflow: "auto" }}>
-              <TableMandataire
-                rows={filteredMandataires}
-                openModal={openModal}
-                updateFilters={updateFilters}
-              />
+              <FiltersMandataireTableMap updateFilters={updateFilters} />
+              <TableMandataire rows={filteredMandataires} />
             </div>
           </React.Fragment>
         )) || (
@@ -111,7 +110,7 @@ export const MapsView = ({
   </div>
 );
 
-class Mapstry extends React.Component {
+class MapstryMandataire extends React.Component {
   state = {
     zoom: 10,
     datamesure: "",
@@ -219,7 +218,7 @@ class Mapstry extends React.Component {
     const center = getCenter(this.state.center, this.props.postcodeMandataire);
 
     return (
-      <MapsView
+      <MapsViewMandataire
         innerRef={this.mapRef}
         zoom={this.state.zoom}
         width={this.props.width}
@@ -244,4 +243,4 @@ class Mapstry extends React.Component {
   }
 }
 
-export default Mapstry;
+export default MapstryMandataire;

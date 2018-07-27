@@ -1,101 +1,51 @@
-import TableRowMandataire from "./TableRowMandataire";
+//@flow
 
-const TableMandataire = ({ rows, openModal, updateFilters, updateTimer, display }) => {
+import styled from "styled-components";
+import React from "react";
+
+import { TableRowMandataire } from ".";
+
+const TdIdentite = styled.td`
+  width: 40%;
+  text-align: left;
+  color: #696969;
+  border-top-width: 0px !important;
+`;
+
+const TdMesure = styled.td`
+  text-align: center;
+  vertical-align: middle;
+  width: 120px;
+  color: #696969;
+  border-top-width: 0px !important;
+`;
+
+const Col12 = styled.div`
+  padding: 0px;
+`;
+
+type TableMandataireType = {
+  rows: Array<Object>
+};
+
+const TableMandataire = ({ rows }: TableMandataireType) => {
   return (
-    <div className="col-12" style={{ padding: "0px" }}>
-      <div style={{ display: display }}>
-        <div
-          className="custom-control custom-radio custom-control-inline"
-          style={{ marginLeft: "20px", display: display }}
-        >
-          <label style={{ cursor: "pointer", width: "60px" }} htmlFor="customRadioInline1">
-            <input
-              data-cy="tab-individuel"
-              type="radio"
-              id="customRadioInline1"
-              name="customRadioInline"
-              style={{ margin: "5px" }}
-              label="Individuels"
-              value="Individuel"
-              onClick={e => updateFilters({ searchType: e.target.value })}
-            />Individuels
-          </label>
-        </div>
-        <div className="custom-control custom-radio custom-control-inline">
-          <label style={{ cursor: "pointer", width: "60px" }} htmlFor="customRadioInline2">
-            <input
-              data-cy="tab-prepose"
-              type="radio"
-              id="customRadioInline2"
-              name="customRadioInline"
-              style={{ margin: "5px" }}
-              label="Préposés"
-              value="Prepose"
-              onClick={e => updateFilters({ searchType: e.target.value })}
-            />Préposés
-          </label>
-        </div>
-        <div className="custom-control custom-radio custom-control-inline">
-          <label style={{ cursor: "pointer", width: "70px" }} htmlFor="customRadioInline3">
-            <input
-              data-cy="tab-service"
-              type="radio"
-              id="customRadioInline3"
-              name="customRadioInline"
-              style={{ margin: "5px" }}
-              label="Services"
-              value="Service"
-              onClick={e => updateFilters({ searchType: e.target.value })}
-            />Services
-          </label>
-          <label style={{ cursor: "pointer", width: "30px" }} htmlFor="customRadioInline4">
-            <input
-              type="radio"
-              id="customRadioInline4"
-              name="customRadioInline"
-              style={{ margin: "5px" }}
-              label="Tous"
-              defaultChecked={true}
-              value="Tous"
-              onClick={e => updateFilters({ searchType: "" })}
-            />Tous
-          </label>
-        </div>
-      </div>
-      <table className="table responsive table-hover" style={{ boderTop: "0px" }}>
+    <Col12 className="col-12">
+      <table className="table responsive table-hover">
         <thead>
           <tr>
-            <td
-              style={{ width: "40%", textAlign: "left", color: "#696969", borderTopWidth: "0px" }}
-              colSpan="2"
-            >
-              Identité{" "}
-            </td>
-            <td
-              style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                width: 120,
-                color: "#696969",
-                borderTopWidth: "0px"
-              }}
-            >
-              Mesures en cours
-            </td>
+            <TdIdentite colSpan="2">Identité </TdIdentite>
+            <TdMesure>Mesures en cours</TdMesure>
           </tr>
         </thead>
         <tbody data-cy="tab-mesure">
           {rows &&
             rows.map(mandataire => (
-              <TableRowMandataire
-                key={mandataire.telephone}
-                mandataire={mandataire}
-                onClick={() => openModal(mandataire)}
-              />
+              <TableRowMandataire key={mandataire.id} mandataire={mandataire} />
             ))}
         </tbody>
       </table>
-    </div>
+    </Col12>
   );
 };
 export default TableMandataire;
