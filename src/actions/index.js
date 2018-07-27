@@ -1,4 +1,5 @@
 import apiFetch from "../components/communComponents/Api";
+import queryString from "query-string";
 
 export const closeModalAction = {
   type: "CLOSE_MODAL"
@@ -36,5 +37,25 @@ export const getInformationforTisAndEtablissementForOneMandataire = (mandataire,
             console.log(e);
           })
     );
+  };
+};
+
+export const updateFilters = (filters, mesures) => ({
+  type: "UPDATE_FILTERS",
+  filters,
+  mesures
+});
+
+export const changeTypeOfMandatairesFilters = filters => {
+  return dispatch => {
+    const stringified = queryString.stringify(filters);
+    console.log(stringified);
+    return apiFetch(`/mesures/popup?${stringified}`)
+      .then(mesures => {
+        dispatch(updateFilters(filters, mesures));
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 };
