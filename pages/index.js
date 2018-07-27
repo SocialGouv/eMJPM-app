@@ -1,2 +1,7 @@
 import Login from "./login";
-export default Login;
+
+const Index = () => (
+    <Login />
+);
+
+export default Index;

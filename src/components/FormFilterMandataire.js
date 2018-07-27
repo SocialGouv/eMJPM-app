@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import FormInput from "./FormInput";
+import FormInput from "./communComponents/FormInput";
 import SearchButton from "./communComponents/SearchButton";
 
 const FormFilterMandataire = () => {
