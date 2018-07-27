@@ -1,9 +1,22 @@
+//@flow
 import styled from "styled-components";
+import React from "react";
 
-import SearchButton from "../communComponents/SearchButton";
-import FormInput from "../FormInput";
+import { SearchButton, FormInput } from "../communComponents";
 
-const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
+const Presentation = styled.div`
+  background: white;
+  padding: 5px;
+  width: 100%;
+`;
+
+type FilterMesuresMapType = {
+  getPostCodeCoordinates: Object,
+  updateValue: Object,
+  value: string
+};
+
+const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }: FilterMesuresMapType) => {
   let input;
   return (
     <Presentation>
@@ -34,11 +47,5 @@ const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
     </Presentation>
   );
 };
-
-const Presentation = styled.div`
-  background: white;
-  padding: 5px;
-  width: 100%;
-`;
 
 export default FilterMesuresMap;
