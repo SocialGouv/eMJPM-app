@@ -47,15 +47,6 @@ const TableMandataire = ({ rows, reserver }: TableMandataireType) => {
             >
               Attente
             </td>
-            <td
-              style={{
-                textAlign: "center",
-                verticalAlign: "middle",
-                width: 45,
-                color: "#696969",
-                borderTopWidth: "0px"
-              }}
-            />
           </tr>
         </thead>
         <tbody data-cy="tab-mesure">

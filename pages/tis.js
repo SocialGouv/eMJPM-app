@@ -6,7 +6,6 @@ import Ti from "./ti";
 import Navigation from "../src/components/communComponents/Navigation";
 import Footer from "../src/components/communComponents/Footer";
 
-
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 const TiPage = () => (
@@ -15,7 +14,6 @@ const TiPage = () => (
       <Navigation logout />
       <div className="container">
         <h1>Chercher au plus proche du majeur à protéger</h1>
-
         <br />
       </div>
       <Ti style={{ marginTop: "100%" }} />

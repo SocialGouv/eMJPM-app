@@ -90,29 +90,28 @@ class TableRowMandataire extends React.Component<Props> {
             {type.toUpperCase().substr(0, 1)}
           </Circle>
         </Cell>
-        <Cell style={{ verticalAlign: "middle" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
+        <Cell>
           <b>{etablissement}</b>
           <br /> <div style={{ color: "#cccccc" }}>{type.toUpperCase()} </div>
         </Cell>
-        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
+        <Cell style={{ textAlign: "center" }}>
           <PillDispo dispo={mesures_en_cours} dispo_max={dispo_max} />
         </Cell>
-        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => this.props.getInformationforTisAndEtablissementForOneMandataire}>
-          {mesures_en_attente}
-        </Cell>
-        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => this.props.reserver(this.props.mandataire)}>
-          <PlusSquare />{" "}
-        </Cell>
-        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
-          {isLate && <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Dernière mise à jour des données datant de plus de 30 jours.">
+        <Cell style={{ textAlign: "center" }}>
+          {isLate && (
+            <span
+              className="d-inline-block"
+              tabIndex="0"
+              data-toggle="tooltip"
+              title="Dernière mise à jour des données datant de plus de 30 jours."
+            >
               <AlertCircle />
-            </span>}
+            </span>
+          )}
         </Cell>
-      </tr>;
+      </tr>
+    );
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(TableRowMandataire);
+export default connect(null, mapDispatchToProps)(TableRowMandataire);
