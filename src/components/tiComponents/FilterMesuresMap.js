@@ -11,7 +11,7 @@ const Presentation = styled.div`
 `;
 
 type FilterMesuresMapType = {
-  getPostCodeCoordinates: Object,
+    getPostCodeCoordinates: Promise<Array<number>>,
   updateValue: Object,
   value: string
 };

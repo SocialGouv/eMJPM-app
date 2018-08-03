@@ -28,7 +28,7 @@ type TableMandataireType = {
   rows: Array<Object>
 };
 
-const TableMandataire = ({ rows }: TableMandataireType) => {
+const TableMandataire = ({ rows, reserver }: TableMandataireType) => {
   return (
     <Col12 className="col-12">
       <table className="table responsive table-hover">
@@ -36,12 +36,32 @@ const TableMandataire = ({ rows }: TableMandataireType) => {
           <tr>
             <TdIdentite colSpan="2">Identité </TdIdentite>
             <TdMesure>Mesures en cours</TdMesure>
+            <td
+              style={{
+                textAlign: "center",
+                verticalAlign: "middle",
+                width: 45,
+                color: "#696969",
+                borderTopWidth: "0px"
+              }}
+            >
+              Attente
+            </td>
+            <td
+              style={{
+                textAlign: "center",
+                verticalAlign: "middle",
+                width: 45,
+                color: "#696969",
+                borderTopWidth: "0px"
+              }}
+            />
           </tr>
         </thead>
         <tbody data-cy="tab-mesure">
           {rows &&
             rows.map(mandataire => (
-              <TableRowMandataire key={mandataire.id} mandataire={mandataire} />
+              <TableRowMandataire key={mandataire.id} mandataire={mandataire} reserver={reserver} />
             ))}
         </tbody>
       </table>

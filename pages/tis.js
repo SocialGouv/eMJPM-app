@@ -2,10 +2,10 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import rootReducer from "../src/reducers";
 import thunkMiddleware from "redux-thunk";
-
 import Ti from "./ti";
 import Navigation from "../src/components/communComponents/Navigation";
 import Footer from "../src/components/communComponents/Footer";
+
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
@@ -15,6 +15,7 @@ const TiPage = () => (
       <Navigation logout />
       <div className="container">
         <h1>Chercher au plus proche du majeur à protéger</h1>
+
         <br />
       </div>
       <Ti style={{ marginTop: "100%" }} />

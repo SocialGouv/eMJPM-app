@@ -117,7 +117,8 @@ class MapstryMandataire extends React.Component {
     value: "",
     showMandataireOfOneMesure: "",
     currentMandataireSelected: "",
-    center: ""
+    center: "",
+    modalIsOpenReservation: false
   };
 
   mapRef = createRef();
@@ -201,6 +202,7 @@ class MapstryMandataire extends React.Component {
     );
   };
 
+
   getPostCodeCoordinates = commune => {
     // return null if no input
     if (!commune || !commune.trim()) {
@@ -227,6 +229,7 @@ class MapstryMandataire extends React.Component {
         onMoveend={() => this.handleMoveend(this.mapRef)}
         mandataires={this.props.mandataires}
         openModal={this.props.openModal}
+        openModalReservation={this.openModalReservation}
         filteredMandataires={this.props.filteredMandataires}
         mesureCount={this.props.mesureCount}
         updateFilters={this.props.updateFilters}
@@ -238,6 +241,7 @@ class MapstryMandataire extends React.Component {
         updateFilterMandataire={this.updateFilterMandataire}
         currentMandataireSelected={this.state.currentMandataireSelected}
         updateIsMandataireClick={this.updateIsMandataireClick}
+        isOpenReservation={this.props.modalIsOpenReservation}
       />
     );
   }

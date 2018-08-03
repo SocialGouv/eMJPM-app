@@ -15,7 +15,7 @@ const Title = styled.div`
 `;
 
 const MapsWidth = styled.div`
-  width: 60%;
+  width: 50%;
   margin-top: 10px;
   margin-right: 3%;
 `;
@@ -23,7 +23,7 @@ const MapsWidth = styled.div`
 const MandatairesWidth = styled.div`
   background-color: white;
   margin-top: 10px;
-  width: 37%;
+  width: 47%;
   max-height: 72vh;
   overflow-y: scroll;
 `;
@@ -45,7 +45,9 @@ export const MapsView = ({
   updateFilterMandataire,
   currentMesureSelected,
   updateIsMesureClick,
-  onCenter
+  onCenter,
+  isOpenReservation,
+  modalIsOpenReservation
 }) => (
   <div className="container">
     <div className="row">
@@ -263,6 +265,8 @@ class Mapstry extends React.Component {
         updateFilterMandataire={this.updateFilterMandataire}
         currentMesureSelected={this.state.currentMesureSelected}
         updateIsMesureClick={this.updateIsMesureClick}
+        isOpenReservation={this.props.isOpenReservation}
+        modalIsOpenReservation={this.props.modalIsOpenReservation}
       />
     );
   }

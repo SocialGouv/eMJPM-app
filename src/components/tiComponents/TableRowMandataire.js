@@ -1,6 +1,6 @@
 // @flow
 import styled from "styled-components";
-import { AlertCircle } from "react-feather";
+import { AlertCircle, PlusSquare } from "react-feather";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -32,11 +32,12 @@ const getColorFromDisponibilite = (dispo: number): string => {
   return "#43b04a";
 };
 
-const Cell = ({ style, title, children }: CellType) => (
+const Cell = ({ style, title, children, onClick }: CellType) => (
   <td
     className="pagination-centered"
     style={{ fontSize: "0.8em", textAlign: "left", verticalAlign: "middle", ...style }}
     title={title}
+    onClick={onClick}
   >
     {children}
   </td>
@@ -83,44 +84,35 @@ class TableRowMandataire extends React.Component<Props> {
       isOlderThanOneMonth(this.props.mandataire.date_mesure_update.slice(0, 10));
     const { getInformationforTisAndEtablissementForOneMandataire } = this.props;
     const { type, etablissement, mesures_en_cours, dispo_max } = this.props.mandataire;
-    return (
-      <tr
-        onClick={() =>
-          getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)
-        }
-        style={{ cursor: "pointer" }}
-      >
+    return <tr onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)} style={{ cursor: "pointer" }}>
         <Cell style={{ width: "100px" }}>
-          <Circle
-            style={{
-              backgroundColor: getColorFromDisponibilite(mesures_en_cours / dispo_max)
-            }}
-          >
+          <Circle style={{ backgroundColor: getColorFromDisponibilite(mesures_en_cours / dispo_max) }}>
             {type.toUpperCase().substr(0, 1)}
           </Circle>
         </Cell>
-        <Cell>
+        <Cell style={{ verticalAlign: "middle" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
           <b>{etablissement}</b>
           <br /> <div style={{ color: "#cccccc" }}>{type.toUpperCase()} </div>
         </Cell>
-        <Cell style={{ textAlign: "center" }}>
+        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
           <PillDispo dispo={mesures_en_cours} dispo_max={dispo_max} />
         </Cell>
-        <Cell style={{ textAlign: "center" }}>
-          {isLate && (
-            <span
-              className="d-inline-block"
-              tabIndex="0"
-              data-toggle="tooltip"
-              title="Dernière mise à jour des données datant de plus de 30 jours."
-            >
-              <AlertCircle />
-            </span>
-          )}
+        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => this.props.getInformationforTisAndEtablissementForOneMandataire}>
+          {mesures_en_attente}
         </Cell>
-      </tr>
-    );
+        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => this.props.reserver(this.props.mandataire)}>
+          <PlusSquare />{" "}
+        </Cell>
+        <Cell style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }} onClick={() => getInformationforTisAndEtablissementForOneMandataire(this.props.mandataire, true)}>
+          {isLate && <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Dernière mise à jour des données datant de plus de 30 jours.">
+              <AlertCircle />
+            </span>}
+        </Cell>
+      </tr>;
   }
 }
 
-export default connect(null, mapDispatchToProps)(TableRowMandataire);
+export default connect(
+  null,
+  mapDispatchToProps
+)(TableRowMandataire);
