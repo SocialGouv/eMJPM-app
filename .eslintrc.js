@@ -23,7 +23,20 @@ module.exports = {
     it: true,
     before: true,
     beforeEach: true,
-    Cypress: true
+    Cypress: true,
+    ReactComponent: false,
+    ReactElement: false,
+    SyntheticEvent: false,
+    SyntheticClipboardEvent: false,
+    SyntheticCompositionEvent: false,
+    SyntheticInputEvent: false,
+    SyntheticUIEvent: false,
+    SyntheticFocusEvent: false,
+    SyntheticKeyboardEvent: false,
+    SyntheticMouseEvent: false,
+    SyntheticDragEvent: false,
+    SyntheticWheelEvent: false,
+    SyntheticTouchEvent: false
   },
   rules: {
     "prettier/prettier": "error",

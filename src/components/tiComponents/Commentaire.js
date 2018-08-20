@@ -1,3 +1,5 @@
+//@flow
+
 import fetch from "isomorphic-fetch";
 import Form from "react-jsonschema-form";
 
@@ -22,7 +24,7 @@ const uiSchema = {
 class Commentaire extends React.Component {
   state = {
     data: [],
-    datamesure: "",
+    datamesure: [],
     updatemessage: ""
   };
 
@@ -44,6 +46,7 @@ class Commentaire extends React.Component {
         });
       });
   }
+
   updateState(e) {
     this.setState({ updatemessage: e.target.value });
   }
@@ -93,6 +96,7 @@ class Commentaire extends React.Component {
   };
 
   render() {
+    const data = this.state.data;
     return (
       <div className="form-group">
         <label htmlFor="exampleFormControlTextarea1">
@@ -127,9 +131,9 @@ class Commentaire extends React.Component {
 
         <hr />
         <div style={{ overflow: "scroll", height: "250px" }} data-cy="tab-comment">
-          {this.state.data &&
-            this.state.data.map &&
-            this.state.data.map(comment => (
+          {data &&
+            data.map &&
+            data.map(comment => (
               <div id={comment.id}>
                 <div style={{ backgroundColor: "#b5b5b5", fontSize: "0.8em" }}>
                   {comment.comment} <br />

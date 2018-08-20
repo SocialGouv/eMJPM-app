@@ -1,11 +1,12 @@
+//@flow
+
 import React, { createRef } from "react";
 import styled from "styled-components";
 import { Map, CircleMarker, TileLayer } from "react-leaflet";
 
-import apiFetch from "../communComponents/Api";
-import TableMandataire from "./TableMandataire";
-import FilterMesuresMap from "./FilterMesuresMap";
-import getCenter from "../communComponents/getCenter";
+import { TableMandataire, FilterMesuresMap } from ".";
+import { apiFetch, getCenter } from "../communComponents";
+import { FiltersMandataireTableMap } from ".";
 
 const Title = styled.div`
   text-align: left;
@@ -14,7 +15,7 @@ const Title = styled.div`
 `;
 
 const MapsWidth = styled.div`
-  width: 60%;
+  width: 50%;
   margin-top: 10px;
   margin-right: 3%;
 `;
@@ -22,7 +23,7 @@ const MapsWidth = styled.div`
 const MandatairesWidth = styled.div`
   background-color: white;
   margin-top: 10px;
-  width: 37%;
+  width: 47%;
   max-height: 72vh;
   overflow-y: scroll;
 `;
@@ -35,7 +36,6 @@ export const MapsView = ({
   onMoveend,
   innerRef,
   filteredMesures,
-  openModal,
   mesureCount,
   updateFilters,
   zoomCodePostal,
@@ -45,7 +45,9 @@ export const MapsView = ({
   updateFilterMandataire,
   currentMesureSelected,
   updateIsMesureClick,
-  onCenter
+  onCenter,
+  isOpenReservation,
+  modalIsOpenReservation
 }) => (
   <div className="container">
     <div className="row">
@@ -91,16 +93,15 @@ export const MapsView = ({
       <MandatairesWidth>
         {(mesureCount && (
           <React.Fragment>
-            <Title>
-              {mesureCount} Professionnel
-              {(mesureCount > 1 && "s") || null}
-            </Title>
-
-            <TableMandataire
-              rows={filteredMesures}
-              openModal={openModal}
-              updateFilters={updateFilters}
-            />
+            {mesureCount && (
+              <React.Fragment>
+                <Title>
+                  {mesureCount} Professionnel{(mesureCount > 1 && "s") || null}
+                </Title>
+                <FiltersMandataireTableMap updateFilters={updateFilters} />
+                <TableMandataire rows={filteredMesures} />
+              </React.Fragment>
+            )}
           </React.Fragment>
         )) || (
           <div style={{ textAlign: "center", marginTop: 20 }}>
@@ -264,6 +265,8 @@ class Mapstry extends React.Component {
         updateFilterMandataire={this.updateFilterMandataire}
         currentMesureSelected={this.state.currentMesureSelected}
         updateIsMesureClick={this.updateIsMesureClick}
+        isOpenReservation={this.props.isOpenReservation}
+        modalIsOpenReservation={this.props.modalIsOpenReservation}
       />
     );
   }
