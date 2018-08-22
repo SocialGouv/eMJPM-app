@@ -1,9 +1,15 @@
 import styled from "styled-components";
 
 import SearchButton from "../communComponents/SearchButton";
-import FormInput from "../FormInput";
+import FormInput from "../serviceComponents/FormInput";
 
-const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
+const Presentation = styled.div`
+  background: white;
+  padding: 5px;
+  width: 350px;
+`;
+
+const FilterMesuresMap = ({ zoomCodePostal, updateValue, value }) => {
   let input;
   return (
     <Presentation>
@@ -17,7 +23,7 @@ const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
             id="commune"
             name="commune"
             onChange={e => updateValue(e.target.value)}
-            placeholder={value || "Commune ou Code Postal"}
+            placeholder={value || "Code Postal"}
           />
         </td>
         <td>
@@ -25,7 +31,7 @@ const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
             data-cy="tab-recherche"
             align="center"
             type="submit"
-            onClick={() => getPostCodeCoordinates(input.value)}
+            onClick={() => zoomCodePostal(input.value)}
           >
             Rechercher
           </SearchButton>
@@ -34,11 +40,5 @@ const FilterMesuresMap = ({ getPostCodeCoordinates, updateValue, value }) => {
     </Presentation>
   );
 };
-
-const Presentation = styled.div`
-  background: white;
-  padding: 5px;
-  width: 100%;
-`;
 
 export default FilterMesuresMap;
