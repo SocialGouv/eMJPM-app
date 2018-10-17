@@ -72,6 +72,12 @@ const COLUMNS = [
     style: { textAlign: "center", alignSelf: "center" }
   },
   {
+    Header: "Cabinet",
+    accessor: "cabinet",
+    width: 100,
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
     Header: "Type",
     id: "type",
     width: 100,
@@ -123,12 +129,12 @@ class TableUser extends React.Component {
       <ReactTable
         style={{ backgroundColor: "white" }}
         columns={COLUMNS}
-        noDataText="Aucun mandataire ici..."
+        noDataText="Aucun user ici..."
         manual
         showPagination={false}
         data={data}
         loading={loading}
-        loadingText="Chargement des mandataires..."
+        loadingText="Chargement des users..."
         defaultSorted={[
           {
             id: "created_at",
