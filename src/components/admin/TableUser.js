@@ -67,16 +67,25 @@ const COLUMNS = [
   },
   {
     Header: "Code postal",
+    id: "code_postal",
     accessor: "code_postal",
     width: 100,
     style: { textAlign: "center", alignSelf: "center" }
   },
   {
+    Header: "Email",
+    id: "email",
+    accessor: "email",
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
     Header: "Cabinet",
+    id: "cabinet",
     accessor: "cabinet",
     width: 100,
     style: { textAlign: "center", alignSelf: "center" }
   },
+
   {
     Header: "Type",
     id: "type",
@@ -113,7 +122,10 @@ class TableUser extends React.Component {
     loading: true
   };
   fetchData = (state, instance) => {
-    const url = `/admin/mandataires?${queryString.stringify(this.props.filters)}`;
+    const url =
+      this.props.type === "mandataire"
+        ? `/admin/mandataires?${queryString.stringify(this.props.filters)}`
+        : `/admin/tis?${queryString.stringify(this.props.filters)}`;
     this.setState({ loading: true }, () =>
       apiFetch(url).then(res => {
         this.setState({
@@ -125,10 +137,11 @@ class TableUser extends React.Component {
   };
   render() {
     const { data, loading } = this.state;
+    const { hideColumns } = this.props;
     return (
       <ReactTable
         style={{ backgroundColor: "white" }}
-        columns={COLUMNS}
+        columns={COLUMNS.filter(col => hideColumns.indexOf(col.id) === -1)}
         noDataText="Aucun user ici..."
         manual
         showPagination={false}
