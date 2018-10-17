@@ -172,6 +172,12 @@ const COLUMNS = [
     style: { textAlign: "center", alignSelf: "center" }
   },
   {
+    Header: "Cabinet (Si Paris)",
+    id: "cabinet",
+    accessor: d => d.cabinet,
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
     Header: "Réactiver",
     id: "reactiver",
     Cell: row => <CellReactivateMesureRedux row={row} />,
