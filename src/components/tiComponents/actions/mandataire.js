@@ -25,6 +25,7 @@ const fetchUpdateMesureAttente = data =>
   });
 
 const createMesureApi = data => {
+  console.log("data", data);
   return apiFetch(`/mandataires/1/mesures`, {
     method: "POST",
     body: JSON.stringify({

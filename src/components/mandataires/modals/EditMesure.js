@@ -136,7 +136,6 @@ const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
       value={value}
       onSelect={obj => onChange(obj.id)}
       labelKey={"etablissement"}
-
     />
   </div>
 );

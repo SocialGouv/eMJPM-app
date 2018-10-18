@@ -10,7 +10,11 @@ const tabs = type =>
       type: "mandataire",
       icon: <UserCheck />,
       content: (
-        <TableUser type={type} filters={{ "users.active": true }} hideColumns={["cabinet","email"]} />
+        <TableUser
+          type={type}
+          filters={{ "users.active": true }}
+          hideColumns={["cabinet", "email"]}
+        />
       )
     },
     {
@@ -18,7 +22,11 @@ const tabs = type =>
       icon: <User />,
       type: "mandataire",
       content: (
-        <TableUser type={type} filters={{ "users.active": false }} hideColumns={["cabinet","email"]} />
+        <TableUser
+          type={type}
+          filters={{ "users.active": false }}
+          hideColumns={["cabinet", "email"]}
+        />
       )
     },
     {

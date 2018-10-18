@@ -10,6 +10,7 @@ const FicheMandataire = ({
   adresse = "",
   code_postal = "",
   ville = "",
+  zip = "",
   dispo_max = 0,
   secretariat = false,
   nb_secretariat = 0,
@@ -81,6 +82,12 @@ const FicheMandataire = ({
         </tbody>
       </table>
       <br />
+      {zip && (
+        <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-zip">
+          mes zones d'interventions privilégiées
+          {zip}
+        </div>
+      )}
     </div>
   );
 };
