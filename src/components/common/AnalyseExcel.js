@@ -61,7 +61,6 @@ export const isValidCodePostal = code_postal =>
   // force boolean
   code_postal
     ? !!(
-        code_postal &&
         code_postal.toString().match(REGEXP_CODE_POSTAL) &&
         !references.invalidCodePostal.includes(code_postal.toString())
       )
@@ -154,6 +153,7 @@ export const validateData = data => {
   let errors;
   const colums = Object.keys(data[0]);
 
+  //adrien: rm check columns because all mandataires don't have all columns in excel
   /*
   const absentColumns = references.mandatoryColumns.filter(col => !colums.includes(col));
   if (absentColumns.length) {
