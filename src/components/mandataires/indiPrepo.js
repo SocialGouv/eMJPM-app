@@ -2,12 +2,6 @@ import dynamic from "next/dynamic";
 import { Home, Map, UserMinus, Clock, FilePlus } from "react-feather";
 
 /* TEMP : the redux store will be moved at root level */
-import { createStore, combineReducers, applyMiddleware, bindActionCreators } from "redux";
-import { reducer as modal } from "redux-modal";
-import { Provider, connect } from "react-redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-
 import { DummyTabs, LoadingMessage } from "..";
 import apiFetch from "../communComponents/Api";
 
@@ -17,18 +11,6 @@ import TableMesures from "./TableMesures";
 import Header from "./Header";
 import CreateMesure from "./CreateMesure";
 import InputFiles from "./inputFiles";
-
-import { mandataireMount } from "./actions/mandataire";
-import mesuresReducer from "./reducers/mesures";
-import mandataireReducer from "./reducers/mandataire";
-
-import {
-  EditMesure,
-  CloseMesure,
-  ReactivateMesure,
-  EditMandataire,
-  ValiderMesureEnAttente
-} from "./modals";
 
 // due to leaflet + SSR
 const OpenStreeMap = dynamic({
@@ -43,13 +25,6 @@ const OpenStreeMap = dynamic({
 });
 
 class MandataireTabs extends React.Component {
-  componentDidMount() {
-    // TODO: temp hack to trigger profile load
-    if (this.props.onMount) {
-      this.props.onMount();
-    }
-  }
-
   render() {
     // define the content of the tabs
     const tabs = [
@@ -131,11 +106,6 @@ class MandataireTabs extends React.Component {
       <React.Fragment>
         <Header />
         <DummyTabs tabs={tabs} />
-        <EditMesure />
-        <CloseMesure />
-        <ReactivateMesure />
-        <EditMandataire />
-        <ValiderMesureEnAttente />
       </React.Fragment>
     );
   }
@@ -143,28 +113,4 @@ class MandataireTabs extends React.Component {
 
 // plug redux stuff
 
-const rootReducer = combineReducers({
-  mesures: mesuresReducer,
-  mandataire: mandataireReducer,
-  modal
-});
-
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-
-const mapDispatchToProps = (dispatch, ownProps) =>
-  bindActionCreators({ onMount: mandataireMount }, dispatch);
-
-// connect to redux store actions
-// connect to redux-modal
-const MandataireTabsRedux = connect(
-  null,
-  mapDispatchToProps
-)(MandataireTabs);
-
-const Mandataires = () => (
-  <Provider store={store}>
-    <MandataireTabsRedux />
-  </Provider>
-);
-
-export default Mandataires;
+export default MandataireTabs;
