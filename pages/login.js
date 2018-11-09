@@ -20,9 +20,11 @@ const LoginContainer = ({ style }) => (
 );
 
 const LoginPage = () => (
-  <Layout inscription>
-    <LoginContainer style={{ marginTop: 100 }} />{" "}
-  </Layout>
+  <>
+    <Layout inscription>
+      <LoginContainer style={{ marginTop: 100 }} />{" "}
+    </Layout>
+  </>
 );
 
 export default LoginPage;

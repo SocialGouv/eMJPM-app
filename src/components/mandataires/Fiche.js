@@ -12,7 +12,9 @@ const FicheMandataire = ({
   ville = "",
   dispo_max = 0,
   secretariat = false,
-  nb_secretariat = 0
+  nb_secretariat = 0,
+  type = "",
+  mesures_en_cours = 0
 }) => {
   const hasAdresse = adresse || code_postal || ville;
   return (
@@ -51,6 +53,7 @@ const FicheMandataire = ({
               data-cy="fiche-manda-dispo-max"
               style={{ textAlign: "center", borderBottom: "1px solid silver" }}
             >
+              {type === "service" ? mesures_en_cours : ""}
               {dispo_max}
             </td>
           </tr>
