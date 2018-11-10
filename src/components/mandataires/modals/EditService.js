@@ -81,12 +81,6 @@ const uiSchema = {
 };
 
 const EditService = ({ show, handleHide, formData, onSubmit, ...props }) => {
-  // todo: we should have perfect mapping api<->data<->form
-  // const cleanData = {
-  //   ...formData,
-  //   date_ouverture: format(formData.date_ouverture, "YYYY-MM-DD"),
-  //   annee: parseInt(formData.annee)
-  // };
   return (
     <Layout show={show} handleHide={handleHide} className="FicheMandataireModal">
       <Form schema={schema} uiSchema={uiSchema} formData={formData} onSubmit={onSubmit}>

@@ -53,18 +53,22 @@ const FicheMandataire = ({
               data-cy="fiche-manda-dispo-max"
               style={{ textAlign: "center", borderBottom: "1px solid silver" }}
             >
-              {type === "service" ? mesures_en_cours : ""}
+              {type === "service" ? `${mesures_en_cours}/` : ""}
               {dispo_max}
             </td>
           </tr>
-          <tr>
-            <td style={{ borderRight: "1px solid silver" }}>
-              <b>Secrétariat</b>
-            </td>
-            <td style={{ textAlign: "center" }} data-cy="fiche-manda-secretariat">
-              {secretariat === true ? `Oui ${nb_secretariat && `(${nb_secretariat} ETP)`}` : "Non"}
-            </td>
-          </tr>
+          {type !== "service" && (
+            <tr>
+              <td style={{ borderRight: "1px solid silver" }}>
+                <b>Secrétariat</b>
+              </td>
+              <td style={{ textAlign: "center" }} data-cy="fiche-manda-secretariat">
+                {secretariat === true
+                  ? `Oui ${nb_secretariat && `(${nb_secretariat} ETP)`}`
+                  : "Non"}
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <br />
