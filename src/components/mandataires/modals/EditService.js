@@ -32,11 +32,6 @@ const schema = {
       enumNames: ["Femme", "Homme"]
     },
     telephone: { type: "string", title: "Téléphone", default: "" },
-    telephone_portable: {
-      type: "string",
-      title: "Téléphone Portable",
-      default: " "
-    },
     email: { type: "string", title: "Adresse email", default: "" },
     adresse: { type: "string", title: "Rue", default: "" },
     code_postal: { type: "string", title: "Code Postal", default: "" },
@@ -70,9 +65,6 @@ const uiSchema = {
   },
   telephone: {
     "ui:placeholder": "Téléphone"
-  },
-  telephone_portable: {
-    "ui:placeholder": "Téléphone Portable"
   },
   email: {
     "ui:placeholder": "Adresse email"
