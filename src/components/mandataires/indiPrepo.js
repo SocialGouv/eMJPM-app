@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { Home, Map, UserMinus, Clock, FilePlus } from "react-feather";
 
-/* TEMP : the redux store will be moved at root level */
 import { DummyTabs, LoadingMessage } from "..";
 import apiFetch from "../communComponents/Api";
 
@@ -19,7 +18,6 @@ const OpenStreeMap = dynamic({
   }),
   loading: () => <LoadingMessage />,
   render: (props, { MapMesures }) => {
-    console.log("render", props, MapMesures);
     return <MapMesures {...props} />;
   }
 });
@@ -110,7 +108,5 @@ class MandataireTabs extends React.Component {
     );
   }
 }
-
-// plug redux stuff
 
 export default MandataireTabs;

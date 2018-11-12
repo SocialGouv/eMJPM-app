@@ -3,7 +3,7 @@ import Form from "react-jsonschema-form";
 import { connectModal } from "redux-modal";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//import { format } from "date-fns";
+
 import { updateMandataire } from "../actions/mandataire";
 import Layout from "./Layout";
 
