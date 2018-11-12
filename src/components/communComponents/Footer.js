@@ -16,12 +16,6 @@ const Footer = ({ fixed }) => (
           <h2>emjpm.beta.gouv.fr</h2>
         </li>
         <li>
-          <a href="https://www.data.gouv.fr/reference">Données de référence</a>
-        </li>
-        <li>
-          <a href="https://www.data.gouv.fr/terms">Conditions générales d'utilisation</a>
-        </li>
-        <li>
           <a
             className="button button_transparent"
             style={{ fontSize: "1em" }}
@@ -29,6 +23,9 @@ const Footer = ({ fixed }) => (
           >
             Nous contacter{" "}
           </a>
+        </li>
+        <li>
+          <p>Site optimisé pour Mozilla Firefox et Google Chrome</p>
         </li>
       </ul>
       <ul className="footer__links"> </ul>

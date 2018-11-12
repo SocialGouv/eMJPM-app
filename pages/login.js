@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-import Footer from "../src/components/communComponents/Footer";
-import Navigation from "../src/components/communComponents/Navigation";
 import LoginForm from "../src/components/loginComponents/LoginForm";
+import { Layout } from "../src/components";
 
 const Title = styled.div`
   text-align: left;
@@ -10,6 +9,20 @@ const Title = styled.div`
   padding-bottom: 15px;
   font-weight: bold;
 `;
+
+const { detect } = require("detect-browser");
+const browser = detect();
+
+// handle the case where we don't detect the browser
+switch (browser && browser.name) {
+  case "ie":
+    alert(
+      "Votre navigateur n'est pas compatible avec l'application e-mjpm. Nous vous recommandons d'utiliser Firefox ou Chromium ou Chrome."
+    );
+    break;
+  default:
+    console.log("not supported");
+}
 
 const LoginContainer = ({ style }) => (
   <div className="container" style={style}>
@@ -21,11 +34,9 @@ const LoginContainer = ({ style }) => (
 );
 
 const LoginPage = () => (
-  <div style={{ backgroundColor: "#cad4de", minHeight: "100%" }}>
-    <Navigation />
-    <LoginContainer style={{ marginTop: 100 }} />
-    <Footer fixed />
-  </div>
+  <Layout inscription>
+    <LoginContainer style={{ marginTop: 100 }} />{" "}
+  </Layout>
 );
 
 export default LoginPage;
