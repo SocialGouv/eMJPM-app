@@ -10,7 +10,18 @@ import Layout from "./Layout";
 const schema = {
   title: "Modifier vos informations",
   type: "object",
-  required: ["nom", "prenom", "genre"],
+  required: [
+    "nom",
+    "prenom",
+    "genre",
+    "telephone",
+    "email",
+    "adresse",
+    "code_postal",
+    "ville",
+    "dispo_max",
+    "mesures_en_cours"
+  ],
   properties: {
     nom: { type: "string", title: "Nom", default: "" },
     prenom: { type: "string", title: "Prénom", default: "" },
@@ -24,7 +35,7 @@ const schema = {
     telephone_portable: {
       type: "string",
       title: "Téléphone Portable",
-      default: ""
+      default: " "
     },
     email: { type: "string", title: "Adresse email", default: "" },
     adresse: { type: "string", title: "Rue", default: "" },
