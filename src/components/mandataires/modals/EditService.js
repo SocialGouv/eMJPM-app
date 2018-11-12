@@ -19,7 +19,8 @@ const schema = {
     "code_postal",
     "ville",
     "dispo_max",
-    "mesures_en_cours"
+    "mesures_en_cours",
+    "etablissement"
   ],
   properties: {
     etablissement: { type: "string", title: "Nom du service", default: "" },
@@ -46,9 +47,6 @@ const schema = {
 const uiSchema = {
   secretariat: {
     "ui:widget": "select"
-  },
-  etablissement: {
-    "ui:placeholder": "Nom"
   },
   nom: {
     "ui:placeholder": "Nom"
