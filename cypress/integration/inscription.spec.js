@@ -238,7 +238,7 @@ describe("Inscription", () => {
         .click();
 
       const data = {
-        root_username: "username-individuel",
+        root_username: "username-ti",
         root_pass1: "password100",
         root_pass2: "password100",
         root_email: "email1@email.com"
@@ -266,7 +266,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 1);
     });
     it("account should not login before activation", function() {
-      cy.loginByForm("username-individuel", "password100");
+      cy.loginByForm("username-ti", "password100");
       cy.get(".alert-danger").should("have.length", 0);
     });
     it("admin should be able to activate account", function() {
@@ -284,7 +284,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 0);
     });
     it("account should login after activation", function() {
-      cy.loginByForm("username-individuel", "password100");
+      cy.loginByForm("username-ti", "password100");
       cy.get(".alert-danger").should("have.length", 0);
       cy.location("pathname", { timeout: 10000 }).should("eq", "/tis");
     });
