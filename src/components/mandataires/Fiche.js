@@ -84,7 +84,7 @@ const FicheMandataire = ({
       <br />
       {zip && (
         <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-zip">
-          mes zones d'interventions privilégiées
+          mes zones d&apos;interventions privilégiées
           {zip}
         </div>
       )}
