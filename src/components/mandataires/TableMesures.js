@@ -172,7 +172,7 @@ const COLUMNS = [
     style: { textAlign: "center", alignSelf: "center" }
   },
   {
-    Header: "Cabinet (Si Paris)",
+    Header: "Cabinet",
     id: "cabinet",
     accessor: d => d.cabinet,
     style: { textAlign: "center", alignSelf: "center" }
