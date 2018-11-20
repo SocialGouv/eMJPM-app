@@ -99,7 +99,7 @@ class Form extends React.Component {
                 </div>
               )}
             />
-            <div style={{ fontSize: "1.2em", fontWeight: "bold" }}>Vous êtes un mandataire :</div>
+            <div style={{ fontSize: "1.2em", fontWeight: "bold" }}>Vous êtes :</div>
             <table
               style={{
                 margin: "20px 0",

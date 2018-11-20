@@ -129,7 +129,7 @@ const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
     items={items}
     inputProps={{
       style: { width: 300 },
-      placeholder: "Choisissez un tis ou vous êtes agrés"
+      placeholder: "Choisissez un tis ou vous êtes agrée"
     }}
     resetOnSelect={false}
     value={value}
