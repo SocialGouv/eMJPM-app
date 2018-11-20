@@ -1,4 +1,4 @@
-import { Phone, Smartphone, Mail, Home } from "react-feather";
+import { Phone, Smartphone, Mail, Home, Info } from "react-feather";
 
 const iconStyle = { width: 22, height: 22, marginRight: 10 };
 
@@ -31,13 +31,12 @@ const FicheMandataire = ({
         <Phone style={iconStyle} />
         {telephone}
       </div>
-      {type !== "service" &&
-        telephone_portable && (
-          <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-telephone-portable">
-            <Smartphone style={iconStyle} />
-            {telephone_portable}
-          </div>
-        )}
+      {type !== "service" && telephone_portable && (
+        <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-telephone-portable">
+          <Smartphone style={iconStyle} />
+          {telephone_portable}
+        </div>
+      )}
       {hasAdresse && (
         <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-adresse">
           <Home style={iconStyle} />
@@ -52,7 +51,8 @@ const FicheMandataire = ({
               <b>
                 {type === "service" ? (
                   <div>
-                    Mesures en cours/<br /> Mesures souhaitées{" "}
+                    Mesures en cours/
+                    <br /> Mesures souhaitées{" "}
                   </div>
                 ) : (
                   "Mesures souhaitées"
@@ -84,7 +84,7 @@ const FicheMandataire = ({
       <br />
       {zip && (
         <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-zip">
-          mes zones d&apos;interventions privilégiées
+          <Info style={iconStyle} />
           {zip}
         </div>
       )}

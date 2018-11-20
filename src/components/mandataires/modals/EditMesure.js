@@ -125,19 +125,17 @@ const uiSchema = {
 };
 
 const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
-  <div>
-    <AutocompleteState
-      items={items}
-      inputProps={{
-        style: { width: 300 },
-        placeholder: "Choisissez un tis ou vous êtes agrés"
-      }}
-      resetOnSelect={false}
-      value={value}
-      onSelect={obj => onChange(obj.id)}
-      labelKey={"etablissement"}
-    />
-  </div>
+  <AutocompleteState
+    items={items}
+    inputProps={{
+      style: { width: 300 },
+      placeholder: "Choisissez un tis ou vous êtes agrés"
+    }}
+    resetOnSelect={false}
+    value={value}
+    onSelect={obj => onChange(obj.id)}
+    labelKey={"etablissement"}
+  />
 );
 
 const TisOfMandataireAutoCompleteRedux = connect(state => ({
