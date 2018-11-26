@@ -12,5 +12,13 @@
       "presets": ["env", "react"],
       "plugins": ["transform-flow-strip-types"]
     }
-  }
+  },
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ]
+  ]
 }
