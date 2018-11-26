@@ -16,8 +16,12 @@
   "presets": [
     [
       "@babel/preset-env",
+
       {
-        "useBuiltIns": "entry"
+        "useBuiltIns": "entry",
+        "targets": {
+          "ie": "11"
+        }
       }
     ]
   ]
