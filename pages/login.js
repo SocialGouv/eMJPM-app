@@ -12,7 +12,7 @@ const Title = styled.div`
 
 const { detect } = require("detect-browser");
 const browser = detect();
-
+console.log("bro", browser.name);
 // handle the case where we don't detect the browser
 switch (browser && browser.name) {
   case "ie":
