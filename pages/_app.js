@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import App, { Container } from "next/app";
 import React from "react";
 
