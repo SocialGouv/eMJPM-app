@@ -21,6 +21,7 @@
   "keywords": [],
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "@wessberg/color": "0.0.2",
     "@zeit/next-css": "^0.2.0",
     "babel-preset-env": "^1.7.0",

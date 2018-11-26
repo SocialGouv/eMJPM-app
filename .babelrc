@@ -1,14 +1,17 @@
 {
   "env": {
     "development": {
+      "entry": ["@babel/polyfill", "./app/js"],
       "presets": ["next/babel"],
       "plugins": ["transform-flow-strip-types"]
     },
     "production": {
+      "entry": ["@babel/polyfill", "./app/js"],
       "presets": ["next/babel"],
       "plugins": ["transform-flow-strip-types"]
     },
     "test": {
+      "entry": ["@babel/polyfill", "./app/js"],
       "presets": ["env", "react"],
       "plugins": ["transform-flow-strip-types"]
     }
