@@ -1,4 +1,3 @@
-import "@babel/polyfill";
 import Document, { Head, Main, NextScript } from "next/document";
 import { injectGlobal, ServerStyleSheet } from "styled-components";
 
@@ -30,7 +29,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <meta name="description" content="" />
           <meta name="author" content="" />
-          <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Array.prototype.map,modernizr:es5array|always" />
+          <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes" />
           <link rel="stylesheet" href="/_next/static/style.css" />
           <link rel="stylesheet" href="/static/css/react-table.css" />
           <link rel="stylesheet" href="/static/css/leaflet/leaflet.css" />

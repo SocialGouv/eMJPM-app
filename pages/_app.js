@@ -1,6 +1,5 @@
 import App, { Container } from "next/app";
 import React from "react";
-import "@babel/polyfill";
 
 // all global css
 import "bootstrap/dist/css/bootstrap.css";
