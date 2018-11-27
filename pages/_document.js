@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <meta name="description" content="" />
           <meta name="author" content="" />
-          <script src="https://cdn.polyfill.io/v2/polyfill.js?ua=Mozilla%2F5.0%20(Windows%3B%20U%3B%20MSIE%207.0%3B%20Windows%20NT%206.0%3B%20en-US)" />
+          <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Array.prototype.map,modernizr:es5array|always" />
           <link rel="stylesheet" href="/_next/static/style.css" />
           <link rel="stylesheet" href="/static/css/react-table.css" />
           <link rel="stylesheet" href="/static/css/leaflet/leaflet.css" />
