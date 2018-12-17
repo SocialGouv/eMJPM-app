@@ -33,7 +33,7 @@ const CloseMesure = ({ show, handleHide, onSubmit, id, ...props }) => {
         <br />
         <p style={{ padding: 20 }}>
           Une fois cette opération effectuée, vous retrouverez cette mesure éteinte dans
-          l&apos;onglet corresponant, mais vous ne pourrez plus la modifier.
+          l&apos;onglet correspondant, mais vous ne pourrez plus la modifier.
         </p>
         <Form
           schema={schema}
