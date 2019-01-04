@@ -21,8 +21,8 @@ const schema = {
       type: "string",
       default: ""
     },
-    pass1: { type: "string" },
-    pass2: { type: "string" },
+    pass1: { type: "string", minLength: 12 },
+    pass2: { type: "string", minLength: 12 },
     etablissement: { type: "string", default: "" },
     nom: { type: "string", default: "" },
     prenom: { type: "string", default: "" },

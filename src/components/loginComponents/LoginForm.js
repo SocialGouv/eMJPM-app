@@ -50,7 +50,7 @@ const uiSchema = {
     } // could also be "select"
   },
   username: {
-    "ui:placeholder": "Identifiant",
+    "ui:placeholder": "Identifiant ou email",
     "ui:options": {
       label: false
     }
