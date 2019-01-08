@@ -27,8 +27,7 @@ export default class MyDocument extends Document {
           <title>e-MJPM</title>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-          <meta name="description" content="" />
-          <meta name="author" content="" />
+          <link id="favicon" rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes" />
           <link rel="stylesheet" href="/static/css/react-table.css" />
           <link rel="stylesheet" href="/static/css/leaflet/leaflet.css" />
