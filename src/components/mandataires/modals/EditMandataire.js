@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 //import { format } from "date-fns";
 import { updateMandataire } from "../actions/mandataire";
 import Layout from "./Layout";
+import { Autocomplete } from "../../index";
 
 const schema = {
   title: "Modifier mes informations",
@@ -96,6 +97,7 @@ const uiSchema = {
     "ui:placeholder": "Rue"
   },
   code_postal: {
+    "ui:widget": "TisOfMandataireAutoComplete",
     "ui:placeholder": "Code Postal"
   },
   ville: {
@@ -112,6 +114,28 @@ const uiSchema = {
   }
 };
 
+const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
+  <Autocomplete
+    items={items}
+    inputProps={{
+      style: { width: 300 },
+      placeholder: "Choississez un code postal"
+    }}
+    resetOnSelect={false}
+    value={value}
+    onSelect={obj => onChange(obj.id)}
+    labelKey={"code_postal"}
+  />
+);
+
+const TisOfMandataireAutoCompleteRedux = connect(state => ({
+  items: state.mandataire.codePostaux
+}))(TisOfMandataireAutoComplete);
+
+const widgets = {
+  TisOfMandataireAutoComplete: TisOfMandataireAutoCompleteRedux
+};
+
 const EditMandataire = ({ show, handleHide, formData, onSubmit, ...props }) => {
   // todo: we should have perfect mapping api<->data<->form
   // const cleanData = {
@@ -121,7 +145,13 @@ const EditMandataire = ({ show, handleHide, formData, onSubmit, ...props }) => {
   // };
   return (
     <Layout show={show} handleHide={handleHide} className="FicheMandataireModal">
-      <Form schema={schema} uiSchema={uiSchema} formData={formData} onSubmit={onSubmit}>
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={formData}
+        widgets={widgets}
+        onSubmit={onSubmit}
+      >
         <div style={{ margin: "20px 0", textAlign: "center" }}>
           <button type="submit" className="btn btn-success" style={{ padding: "10px 30px" }}>
             Valider

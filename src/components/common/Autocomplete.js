@@ -55,10 +55,14 @@ class FuseHighLighter extends React.Component {
 }
 // just wrap react-autocomplete state and internal event for some props.component(default=ReactAutocomplete)
 class Autocomplete extends React.Component {
-  state = {
-    value: "",
-    items: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: this.props.value || "",
+      items: []
+    };
+  }
+
   onSelect = (value, obj) => {
     if (this.props.onSelect) {
       this.props.onSelect(obj.item);

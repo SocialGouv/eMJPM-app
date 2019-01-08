@@ -9,6 +9,7 @@ const MANDATAIRE_INITIAL_STATE = {
   },
   // store etablissement for autompletes and getDisplayValue
   finess: [],
+  codePostaux: [],
   // store tis for autompletes and getDisplayValue
   tis: []
 };
@@ -35,6 +36,11 @@ const mandataireReducer = (state = MANDATAIRE_INITIAL_STATE, action) => {
       return {
         ...state,
         finess: action.data
+      };
+    case "CODE_POSTAL_UPDATED":
+      return {
+        ...state,
+        codePostaux: action.data
       };
     case "TIS_UPDATED":
       return {

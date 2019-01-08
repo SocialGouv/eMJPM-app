@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { MinusSquare } from "react-feather";
+import { Info, MinusSquare } from "react-feather";
 import { show } from "redux-modal";
 
 import { Button, Autocomplete, SelectionManager } from "..";

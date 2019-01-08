@@ -7,6 +7,7 @@ export const MANDATAIRE_PROFILE_UPDATED = "MANDATAIRE_PROFILE_UPDATED";
 export const PROFILE_UPDATED = "PROFILE_UPDATED";
 export const FINESS_UPDATED = "FINESS_UPDATED";
 export const TIS_UPDATED = "TIS_UPDATED";
+export const CODE_POSTAL_UPDATED= "CODE_POSTAL_UPDATED"
 
 /* ---------- API */
 
@@ -24,6 +25,7 @@ const updateMandataireApi = data =>
   });
 
 const fetchAllTis = () => apiFetch("/mandataires/tis");
+const fetchAllCodePostaux = () => apiFetch("/codePostaux");
 const fetchAllFiness = () =>
   apiFetch("/mandataires/1/etablissements").then(data => data.filter((_, i) => i < 1000));
 
@@ -35,6 +37,9 @@ export const mandataireMount = () => dispatch =>
     .then(json => dispatch(mandataireProfileUpdated(json)))
     .then(() => {
       fetchAllFiness().then(etablissements => dispatch(finessUpdated(etablissements)));
+    })
+    .then(() => {
+      fetchAllCodePostaux().then(codePostaux => dispatch(codePostalUpdated(codePostaux)));
     })
     .then(() => {
       fetchAllTis().then(tis => dispatch(tisUpdated(tis)));
@@ -61,6 +66,11 @@ export const mandataireProfileUpdated = data => ({
 
 export const finessUpdated = data => ({
   type: FINESS_UPDATED,
+  data
+});
+
+export const codePostalUpdated = data => ({
+  type: CODE_POSTAL_UPDATED,
   data
 });
 

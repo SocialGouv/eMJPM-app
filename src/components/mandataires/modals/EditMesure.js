@@ -23,7 +23,7 @@ const schema = {
       enum: typeMesure
     },
     //TODO(Adrien): discus with PO
-    // ti_id: { type: "number" },
+    ti_id: { type: "number" },
     // cabinet: { type: "string", enum: cabinet },
     residence: {
       type: "string",
@@ -90,14 +90,14 @@ const uiSchema = {
     }
   },
   //TODO(Adrien): discus with PO
-  // ti_id: {
-  //   "ui:widget": "TisOfMandataireAutoComplete",
-  //   "ui:title": "Tribunal instance",
-  //   "ui:placeholder": "Ti",
-  //   "ui:options": {
-  //     label: true
-  //   }
-  // },
+  ti_id: {
+    "ui:widget": "TisOfMandataireAutoComplete",
+    "ui:title": "Tribunal instance",
+    "ui:placeholder": "Ti",
+    "ui:options": {
+      label: true
+    }
+  },
   type: {
     "ui:placeholder": "Type de mesure",
     "ui:title": "Type de mesure",
@@ -116,7 +116,7 @@ const uiSchema = {
   }
 };
 
-const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
+const TisOfMandataireAutoComplete = ({ items, value, onChange, formData }) => (
   <Autocomplete
     items={items}
     inputProps={{
@@ -124,7 +124,7 @@ const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
       placeholder: "Choisissez un tis ou vous êtes agrée"
     }}
     resetOnSelect={false}
-    value={value}
+    value={1}
     onSelect={obj => onChange(obj.id)}
     labelKey={"etablissement"}
   />

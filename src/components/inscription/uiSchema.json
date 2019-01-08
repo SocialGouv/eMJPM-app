@@ -58,6 +58,7 @@
     "classNames": "input__long"
   },
   "code_postal": {
+    "ui:widget": "TisOfMandataireAutoComplete",
     "ui:title": "Code Postal",
     "ui:placeholder": "ex: 89100",
     "classNames": "input__code_postal"
@@ -73,3 +74,4 @@
     "classNames": "input__long"
   }
 }
+
