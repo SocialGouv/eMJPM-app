@@ -15,17 +15,17 @@ const DEFAULT_FUSE_OPTIONS = {
   //distance: 100,
   maxPatternLength: 16,
   minMatchCharLength: 2,
-  keys: ["etablissement"]
+  keys: ["nom"]
 };
 
 // init a fuse instance
-const getFuse = data => new Fuse(data, DEFAULT_FUSE_OPTIONS);
+const getFuse = (data, options = {}) => new Fuse(data, { ...DEFAULT_FUSE_OPTIONS, ...options });
 
 class FuseHighLighter extends React.Component {
   render() {
-    const { suggestion, query, isHighlighted, onClick } = this.props;
+    const { value, suggestion, query, isHighlighted, onClick } = this.props;
 
-    let html = suggestion.item.etablissement; // todo: handle different property
+    let html = value; // todo: handle different property
     let offset = 0;
     let newHtml;
     suggestion.matches.forEach(match => {
@@ -88,7 +88,7 @@ class Autocomplete extends React.Component {
   };
   componentDidMount() {
     // instantiate fuse index
-    this.fuse = getFuse(this.props.items);
+    this.fuse = getFuse(this.props.items, { keys: [this.props.labelKey] });
   }
   render() {
     const Component = this.props.component;
@@ -117,6 +117,7 @@ class Autocomplete extends React.Component {
             query={this.state.value}
             key={getLabel(suggestion)}
             suggestion={suggestion}
+            value={getLabel(suggestion)}
           />
         )}
         getItemValue={getLabel}
@@ -126,16 +127,20 @@ class Autocomplete extends React.Component {
     );
   }
 }
+
 Autocomplete.propTypes = {
   onSelect: PropTypes.func.isRequired,
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
   getLabel: PropTypes.func.isRequired,
-  resetOnSelect: PropTypes.bool.isRequired
+  resetOnSelect: PropTypes.bool.isRequired,
+  labelKey: PropTypes.string.isRequired
 };
+
 Autocomplete.defaultProps = {
   component: ReactAutocomplete,
-  getLabel: suggestion => suggestion.item.etablissement,
-  resetOnSelect: true
+  getLabel: suggestion => suggestion.item.nom,
+  resetOnSelect: true,
+  labelKey: "nom"
 };
 
 export default Autocomplete;
