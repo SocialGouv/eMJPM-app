@@ -101,7 +101,12 @@ class Autocomplete extends React.Component {
           border: "1px solid silver",
           borderTop: 0,
           background: "white",
-          padding: 5
+          padding: 5,
+          left: 0,
+          top: "2em"
+        }}
+        wrapperStyle={{
+          position: "relative"
         }}
         {...this.props}
         items={this.state.items}
