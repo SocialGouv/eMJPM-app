@@ -76,7 +76,7 @@ const Jumbo = ({ children }) => <JumboContent className="jumbotron">{children}</
 
 const ErrorBox = ({ message }) =>
   (message && (
-    <div className="alert alert-danger" role="alert">
+    <div className="alert alert-danger" role="alert" style={{ marginBottom: 10 }}>
       {message}
     </div>
   )) ||
@@ -104,8 +104,9 @@ export const LoginFormView = ({ formData, onSubmit, error, status }) => (
           "Me connecter"}
       </button>
       <br />
-      <a href="/forgot-password">J&apos;ai oublié mon mot de passe</a>
+
       <ErrorBox message={error} />
+      <a href="/forgot-password">J&apos;ai oublié mon mot de passe</a>
       <hr style={{ marginTop: 20 }} />
       <a href="mailto:contact@emjpm.beta.gouv.fr?subject=eMJPM&body=Bonjour,">
         Contactez-nous en cas de difficulté de connexion
