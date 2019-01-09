@@ -94,6 +94,7 @@ const uiSchema = {
     "ui:widget": "TisOfMandataireAutoComplete",
     "ui:title": "Tribunal instance",
     "ui:placeholder": "Ti",
+    classNames: "relative",
     "ui:options": {
       label: true
     }
@@ -124,7 +125,11 @@ const TisOfMandataireAutoComplete = ({ items, value, onChange, formData }) => (
       placeholder: "Choisissez un tis ou vous êtes agrée"
     }}
     resetOnSelect={false}
-    value={1}
+    value={
+      value &&
+      items.find(item => item.id === value) &&
+      items.find(item => item.id === value).etablissement
+    }
     onSelect={obj => onChange(obj.id)}
     labelKey={"etablissement"}
   />

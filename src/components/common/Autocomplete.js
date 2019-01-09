@@ -15,7 +15,7 @@ const DEFAULT_FUSE_OPTIONS = {
   //distance: 100,
   maxPatternLength: 16,
   minMatchCharLength: 2,
-  keys: ["nom"]
+  keys: ["etablissement"]
 };
 
 // init a fuse instance
@@ -25,7 +25,7 @@ class FuseHighLighter extends React.Component {
   render() {
     const { suggestion, query, isHighlighted, onClick } = this.props;
 
-    let html = suggestion.item.nom; // todo: handle different property
+    let html = suggestion.item.etablissement; // todo: handle different property
     let offset = 0;
     let newHtml;
     suggestion.matches.forEach(match => {
@@ -129,7 +129,7 @@ Autocomplete.propTypes = {
 };
 Autocomplete.defaultProps = {
   component: ReactAutocomplete,
-  getLabel: suggestion => suggestion.item.nom,
+  getLabel: suggestion => suggestion.item.etablissement,
   resetOnSelect: true
 };
 
