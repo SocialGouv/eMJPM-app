@@ -7,11 +7,6 @@
     "ui:title": "Répéter le mot de passe",
     "ui:placeholder": "8 caractères minimum"
   },
-  "username": {
-    "ui:title": "Identifiant (vous servira pour vous connecter sur E-MJPM)",
-    "ui:placeholder": "Nom d'utilisateur",
-    "classNames": "input__long"
-  },
   "nom": {
     "ui:title": "Nom",
     "ui:placeholder": "Nom"

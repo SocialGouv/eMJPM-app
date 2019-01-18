@@ -6,7 +6,6 @@ const schema = {
   type: "object",
   required: ["username", "pass1", "pass2", "email"],
   properties: {
-    username: { type: "string", title: "Identifiant", default: "" },
     pass1: { type: "string", title: "Mot de passe", minLength: 8 },
     pass2: { type: "string", title: "Verifier le Mot de passe", minLength: 8 },
     nom: { type: "string", title: "Nom", default: "" },

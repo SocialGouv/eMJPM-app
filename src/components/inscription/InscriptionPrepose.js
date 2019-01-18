@@ -16,10 +16,6 @@ const schema = {
     "ville"
   ],
   properties: {
-    username: {
-      type: "string",
-      default: ""
-    },
     pass1: { type: "string", minLength: 8 },
     pass2: { type: "string", minLength: 8 },
     nom: { type: "string", default: "" },
