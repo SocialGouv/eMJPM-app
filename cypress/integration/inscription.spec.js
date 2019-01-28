@@ -265,7 +265,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='En attente de validation']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
       cy.get("[data-cy='UserCellAction']")
-        .last()
+        .first()
         .click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
       cy.get("[data-cy='Actifs']").click();
