@@ -272,7 +272,6 @@ describe("Inscription", () => {
             .last()
             .click();
         });
-
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
       cy.get("[data-cy='Actifs']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
