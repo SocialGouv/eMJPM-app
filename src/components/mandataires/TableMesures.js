@@ -105,6 +105,12 @@ const COLUMNS = [
     style: { textAlign: "center", alignSelf: "center" }
   },
   {
+    Header: "Mandataire",
+    id: "mandataire_id",
+    accessor: d => d.mandataire_id,
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
     Header: "Tribunal d'instance",
     id: "ti",
     accessor: d => d.etablissement,
