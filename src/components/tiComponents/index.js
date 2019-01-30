@@ -54,7 +54,6 @@ class Ti extends React.Component {
           <TableMesures
             fetch={() => apiFetch(`/mesures/getAllMesuresByTis`)}
             hideColumns={[
-              "modifier",
               "reactiver",
               "fin-mandat",
               "extinction",
