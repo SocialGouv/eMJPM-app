@@ -16,7 +16,13 @@ import { tiMount } from "./actions/mandataire";
 import mandataireReducer from "./reducers/mandataire";
 import mesuresReducer from "./reducers/mesures";
 import mapReducer from "./reducers/map";
-import { FicheMandataireModal, ModalMesureValidation, ModalMesureReservation, EditMesure } from "./modals";
+import {
+  FicheMandataireModal,
+  ModalMesureValidation,
+  ModalMesureReservation,
+  EditMesure,
+  CloseMesure
+} from "./modals";
 import TableMesures from "../mandataires/TableMesures";
 //import TableMesures from "./TableMesures";
 import apiFetch from "../communComponents/Api";
@@ -57,7 +63,6 @@ class Ti extends React.Component {
             fetch={() => apiFetch(`/mesures/getAllMesuresByTis`)}
             hideColumns={[
               "reactiver",
-              "fin-mandat",
               "extinction",
               "residence",
               "valider",
@@ -76,6 +81,7 @@ class Ti extends React.Component {
         <ModalMesureValidation />
         <ModalMesureReservation />
         <EditMesure />
+        <CloseMesure />
       </div>
     );
   }
