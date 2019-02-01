@@ -42,7 +42,8 @@ class Form extends React.Component {
     typeMandataire: null,
     tis: [],
     formData: {},
-    status: "idle"
+    status: "idle",
+    message: ""
   };
 
   setTypeMandataire = e => {
@@ -72,6 +73,7 @@ class Form extends React.Component {
     })
       .then(json => {
         if (json.success === false) {
+          this.setState({ status: "error", message: json.message });
           throw new Error();
         }
         Router.push("/inscription-done");
@@ -159,7 +161,7 @@ class Form extends React.Component {
             )}
             {this.state.status === "error" && (
               <div style={{ textAlign: "center", color: "red", fontSize: "1.1em" }}>
-                Erreur; Votre compte n&apos;a pas pû être crée :/
+                {this.state.message}
               </div>
             )}
           </div>
