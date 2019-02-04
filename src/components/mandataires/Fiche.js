@@ -1,7 +1,14 @@
 import { Phone, Smartphone, Mail, Home, Info } from "react-feather";
 
+import { Draggable, Droppable } from "react-drag-and-drop";
+import DragAndDrop from "../common/DragAndDrop";
+
 const iconStyle = { width: 22, height: 22, marginRight: 10 };
 
+const onChange = data => {
+  console.log("1");
+
+};
 // fiche recap
 const FicheMandataire = ({
   email = "",
@@ -82,6 +89,7 @@ const FicheMandataire = ({
         </tbody>
       </table>
       <br />
+<DragAndDrop />
     </div>
   );
 };
