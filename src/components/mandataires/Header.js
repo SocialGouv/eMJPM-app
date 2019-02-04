@@ -39,12 +39,28 @@ const HeaderMandataire = ({
         `${nom} ${prenom}`
       )}
     </Title>
-    <div>
-      Je déclare actuellement aux juges pouvoir prendre{" "}
-      {dispo_max - mesures_en_cours - mesures_en_attente} mesures supplémentaires
-      (le chiffre correspond au nb mesures souhaitées - mesures en cours - mesures réservées)
-      rendez-vous dans "Mes informations" pour modifier la capacité souhaitée
-    </div>
+    {dispo_max - mesures_en_cours - mesures_en_attente > 0 ? (
+      <>
+        <div>
+          Je déclare actuellement aux juges pouvoir prendre{" "}
+          {dispo_max - mesures_en_cours - mesures_en_attente} mesures supplémentaires.
+          <br />
+          (le chiffre correspond au nb mesures souhaitées - mesures en cours - mesures réservées)
+          <br />
+          <div style={{ fontSize: "0.8em", fontStyle: "italic" }}>
+            rendez-vous dans "Mes informations" pour modifier la capacité souhaitée
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div>
+          Je déclare actuellement aux juges que le nombre de mesures (en cours + réservées) dépasse
+          le nombre souhaité de {" "}
+          {-(dispo_max - mesures_en_cours - mesures_en_attente)} mesures.
+        </div>
+      </>
+    )}
     <div style={{ textAlign: "right", fontSize: "0.8em", color: "#555" }}>
       {date_mesure_update && (
         <div>
