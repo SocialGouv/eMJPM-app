@@ -17,6 +17,9 @@ const Title = styled.div`
   text-transform: uppercase;
 `;
 
+const currentDispos = (dispo_max, mesures_en_cours, mesures_en_attente) =>
+  dispo_max - mesures_en_cours - mesures_en_attente;
+
 const HeaderMandataire = ({
   nom,
   prenom,
@@ -39,10 +42,10 @@ const HeaderMandataire = ({
         `${nom} ${prenom}`
       )}
     </Title>
-    {dispo_max - mesures_en_cours - mesures_en_attente > 0 ? (
+    {currentDispos(dispo_max, mesures_en_cours, mesures_en_attente) > 0 ? (
       <div>
         Je déclare actuellement aux juges pouvoir prendre{" "}
-        {dispo_max - mesures_en_cours - mesures_en_attente} mesures supplémentaires.
+        {currentDispos(dispo_max, mesures_en_cours, mesures_en_attente)} mesures supplémentaires.
         <br />
         (le chiffre correspond au nb mesures souhaitées - mesures en cours - mesures réservées)
         <br />
@@ -53,7 +56,8 @@ const HeaderMandataire = ({
     ) : (
       <div>
         Je déclare actuellement aux juges que le nombre de mesures (en cours + réservées) dépasse le
-        nombre souhaité de {-(dispo_max - mesures_en_cours - mesures_en_attente)} mesures.
+        nombre souhaité de {-currentDispos(dispo_max, mesures_en_cours, mesures_en_attente)}{" "}
+        mesures.
       </div>
     )}
     <div style={{ textAlign: "right", fontSize: "0.8em", color: "#555" }}>
