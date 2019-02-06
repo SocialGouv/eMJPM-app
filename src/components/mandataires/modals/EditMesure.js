@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { format } from "date-fns";
 import { updateMesure } from "../actions/mesures";
-import Layout from "./Layout";
+import Layout from "../../communComponents/Layout";
 import { Autocomplete } from "../..";
 import { typeMesure, residence, civilite, cabinet } from "../../common/nomination";
 
