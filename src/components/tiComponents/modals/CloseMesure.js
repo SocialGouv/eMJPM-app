@@ -54,8 +54,6 @@ const CloseMesure = ({ show, handleHide, onSubmit, id, ...props }) => {
 const mapDispatchToProps = (dispatch, ownProps) =>
   bindActionCreators({ onSubmit: closeMesure }, dispatch);
 
-// connect to redux store actions
-// connect to redux-modal
 export default connect(
   null,
   mapDispatchToProps
