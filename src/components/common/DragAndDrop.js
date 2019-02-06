@@ -8,16 +8,6 @@ import apiFetch from "../communComponents/Api";
 // assume given objects have an "id" property
 //
 class DragAndDrop extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      imageURL: ""
-    };
-
-    this.handleUploadImage = this.handleUploadImage.bind(this);
-  }
-
   handleUploadImage(ev) {
     ev.preventDefault();
 
@@ -35,7 +25,7 @@ class DragAndDrop extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleUploadImage} enctype="multipart/form-data">
+      <form onSubmit={this.handleUploadImage} >
         <div>
           <input
             ref={ref => {
