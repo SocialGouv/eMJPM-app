@@ -1,13 +1,7 @@
 import React from "react";
 import apiFetch from "../communComponents/Api";
 
-//
-// render prop
-// handle selection, onAdd, onRemove
-// triggers props.onAdd and props.onRemove http method
-// assume given objects have an "id" property
-//
-class DragAndDrop extends React.Component {
+class ImportCV extends React.Component {
   handleUploadImage(ev) {
     ev.preventDefault();
 
@@ -20,6 +14,9 @@ class DragAndDrop extends React.Component {
       headers: {
         "Content-Type": "multipart/form-data"
       }
+    }).catch(e => {
+      alert("Impossible de uploader le Curriculum Vitae");
+      throw e;
     });
   }
 
@@ -43,4 +40,4 @@ class DragAndDrop extends React.Component {
   }
 }
 
-export default DragAndDrop;
+export default ImportCV;
