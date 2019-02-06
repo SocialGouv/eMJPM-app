@@ -18,6 +18,36 @@ const CellActive = ({ active }) => (
   </span>
 );
 
+const suppr = (id, type) => {
+  if (type === "ti") {
+    apiFetch(`/mandataires/${id}`, {
+      method: "DELETE"
+    }).catch(e => {
+      alert("Impossible de uploader le Curriculum Vitae");
+      throw e;
+    });
+  } else {
+    apiFetch(`/mandataires/${id}`, {
+      method: "DELETE"
+    }).catch(e => {
+      alert("Impossible de uploader le Curriculum Vitae");
+      throw e;
+    });
+  }
+};
+
+const CellActionSupprimer = ({ row: { id, type } }) => (
+  <SearchButton
+    onClick={() => suppr(id, type)}
+    error={active}
+    data-cy="UserCellAction"
+    style={{ textAlign: "center", fontSize: "0.8em" }}
+    type="submit"
+  >
+    Supprimer
+  </SearchButton>
+);
+
 const CellAction = ({ row: { id, active } }) => (
   <ToggleState
     getPromise={active =>
@@ -110,6 +140,12 @@ const COLUMNS = [
   {
     Header: "Activer",
     Cell: row => <CellAction row={row.row} />,
+    width: 120,
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
+    Header: "Supprimer",
+    Cell: row => <CellActionSupprimer row={row.row} />,
     width: 120,
     style: { textAlign: "center", alignSelf: "center" }
   }
