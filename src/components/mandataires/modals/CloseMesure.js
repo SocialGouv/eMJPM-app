@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { format } from "date-fns";
 
 import { closeMesure } from "../actions/mesures";
-import Layout from "./Layout";
+import Layout from "../../communComponents/Layout";
 
 const schema = {
   type: "string",

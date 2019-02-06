@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Button } from "../..";
 
 import { reactivateMesure } from "../actions/mesures";
-import Layout from "./Layout";
+import Layout from "../../communComponents/Layout";
 
 const ReactivateMesure = ({ show, handleHide, onSubmit, id, ...props }) => {
   return (
