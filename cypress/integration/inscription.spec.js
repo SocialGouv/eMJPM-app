@@ -229,7 +229,7 @@ describe("Inscription", () => {
         root_username: "username-ti",
         root_pass1: "password100",
         root_pass2: "password100",
-        root_email: "email-ti@email.com"
+        root_email: "email1@email.com"
       };
       const dataSelect = {
         root_cabinet: "2A"
@@ -255,7 +255,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
     });
     it("account should not login before activation", function() {
-      cy.loginByForm("email-ti@email.com", "password100");
+      cy.loginByForm("username-ti", "password100");
       cy.get(".alert-danger").should("have.length", 1);
     });
     it("admin should be able to activate account", function() {
@@ -264,6 +264,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 1);
       cy.get("[data-cy='En attente de validation']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
+<<<<<<< HEAD
       cy.get(".rt-tr ")
         .contains("email-ti@email.com")
         .parent(".rt-tr")
@@ -272,6 +273,11 @@ describe("Inscription", () => {
             .last()
             .click();
         });
+=======
+      cy.get("[data-cy='UserCellAction']")
+        .last()
+        .click();
+>>>>>>> parent of 1bf9476... tests: fix registration TI e2e
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
       cy.get("[data-cy='Actifs']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
@@ -279,7 +285,7 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 1);
     });
     it("account should login after activation", function() {
-      cy.loginByForm("email-ti@email.com", "password100");
+      cy.loginByForm("username-ti", "password100");
       cy.get(".alert-danger").should("have.length", 0);
       cy.location("pathname", { timeout: 10000 }).should("eq", "/tis");
     });
