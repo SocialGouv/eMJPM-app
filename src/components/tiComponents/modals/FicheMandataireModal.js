@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 
 import { Button } from "../..";
 import FetchCommentaires from "../FetchCommentaires";
-import Layout from "../../mandataires/modals/Layout";
+import Layout from "../../communComponents/Layout";
 import apiFetch from "../../communComponents/Api";
 import FicheMandataire from "../../mandataires/Fiche";
 
