@@ -1,22 +1,32 @@
 {
   "pass1": {
     "ui:title": "Mot de passe",
-    "ui:placeholder": "10 caractères minimum",
-    "ui:widget": "password"
+    "ui:placeholder": "8 caractères minimum"
   },
   "pass2": {
     "ui:title": "Répéter le mot de passe",
-    "ui:placeholder": "10 caractères minimum",
-    "ui:widget": "password"
+    "ui:placeholder": "8 caractères minimum"
   },
   "username": {
     "ui:title": "Identifiant (vous servira pour vous connecter sur E-MJPM)",
-    "ui:placeholder": "Nom d'utilisateur (10 caractères minimum)",
+    "ui:placeholder": "Nom d'utilisateur",
     "classNames": "input__long"
   },
   "nom": {
     "ui:title": "Nom",
     "ui:placeholder": "Nom"
+  },
+  "genre": {
+    "ui:title": "Genre ",
+    "ui:placeholder": "Genre"
+  },
+  "dispo_max": {
+    "ui:title": "Mesures souhaitées",
+    "ui:placeholder": "Mesures souhaitées"
+  },
+  "mesures_en_cours": {
+    "ui:title": "Mesures en cours",
+    "ui:placeholder": "Mesures en cours"
   },
   "prenom": {
     "ui:title": "Prénom",
@@ -63,5 +73,9 @@
     "ui:title": "Nom d'Etablissements",
     "ui:placeholder": "Nom d'Etablissements",
     "classNames": "input__long"
+  },
+  "cabinet": {
+    "ui:title": "Cabinet",
+    "ui:placeholder": "cabinet"
   }
 }

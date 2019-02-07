@@ -6,6 +6,8 @@ import { bindActionCreators } from "redux";
 import { format } from "date-fns";
 import { updateMesure } from "../actions/mesures";
 import Layout from "./Layout";
+import { Autocomplete } from "../..";
+import { typeMesure, residence, civilite, cabinet } from "../../common/nomination";
 
 const schema = {
   title: "Ouvrir une nouvelle mesure",
@@ -18,32 +20,18 @@ const schema = {
     },
     type: {
       type: "string",
-      enum: [
-        "Tutelle",
-        "Curatelle",
-        "Sauvegarde de justice",
-        "Mesure ad hoc",
-        "MAJ",
-        "tutelle aux biens",
-        "tutelle à la personne",
-        "tutelle aux biens et à la personne",
-        "curatelle simple aux biens",
-        "curatelle simple à la personne",
-        "curatelle simple aux biens et à la personne",
-        "curatelle renforcée aux biens",
-        "curatelle renforcée à la personne",
-        "curatelle renforcée aux biens et à la personne",
-        "sauvegarde de justice",
-        "sauvegarde de justice avec mandat spécial"
-      ]
+      enum: typeMesure
     },
+    //TODO(Adrien): discus with PO
+    // ti_id: { type: "number" },
+    // cabinet: { type: "string", enum: cabinet },
     residence: {
       type: "string",
-      enum: ["A domicile", "En établissement"]
+      enum: residence
     },
     code_postal: { type: "string" },
     ville: { type: "string" },
-    civilite: { type: "string", enum: ["F", "H"] },
+    civilite: { type: "string", enum: civilite },
     annee: { type: "integer", maxLength: 4 },
     numero_dossier: { type: "string", default: " " }
   }
@@ -101,6 +89,15 @@ const uiSchema = {
       label: true
     }
   },
+  //TODO(Adrien): discus with PO
+  // ti_id: {
+  //   "ui:widget": "TisOfMandataireAutoComplete",
+  //   "ui:title": "Tribunal instance",
+  //   "ui:placeholder": "Ti",
+  //   "ui:options": {
+  //     label: true
+  //   }
+  // },
   type: {
     "ui:placeholder": "Type de mesure",
     "ui:title": "Type de mesure",
@@ -109,7 +106,36 @@ const uiSchema = {
     "ui:options": {
       label: false
     }
+  },
+  numero_dossier: {
+    "ui:autofocus": true,
+    "ui:title": "Numéro de dossier",
+    "ui:options": {
+      label: true
+    }
   }
+};
+
+const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
+  <Autocomplete
+    items={items}
+    inputProps={{
+      style: { width: 300 },
+      placeholder: "Choisissez un tis ou vous êtes agrée"
+    }}
+    resetOnSelect={false}
+    value={value}
+    onSelect={obj => onChange(obj.id)}
+    labelKey={"etablissement"}
+  />
+);
+
+const TisOfMandataireAutoCompleteRedux = connect(state => ({
+  items: state.mandataire.tis
+}))(TisOfMandataireAutoComplete);
+
+const widgets = {
+  TisOfMandataireAutoComplete: TisOfMandataireAutoCompleteRedux
 };
 
 const EditMesure = ({ show, handleHide, formData, onSubmit, ...props }) => {
@@ -117,11 +143,18 @@ const EditMesure = ({ show, handleHide, formData, onSubmit, ...props }) => {
   const cleanData = {
     ...formData,
     date_ouverture: format(formData.date_ouverture, "YYYY-MM-DD"),
-    annee: parseInt(formData.annee)
+    annee: parseInt(formData.annee),
+    numero_dossier: formData.numero_dossier || ""
   };
   return (
     <Layout show={show} handleHide={handleHide}>
-      <Form schema={schema} uiSchema={uiSchema} formData={cleanData} onSubmit={onSubmit}>
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={cleanData}
+        widgets={widgets}
+        onSubmit={onSubmit}
+      >
         <div style={{ margin: "20px 0", textAlign: "center" }}>
           <button type="submit" className="btn btn-success" style={{ padding: "10px 30px" }}>
             Valider

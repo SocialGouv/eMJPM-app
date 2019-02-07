@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { X, Save, PlusSquare, XCircle, CheckCircle } from "react-feather";
 import { format } from "date-fns";
+import { typeMesure, residence, civilite, cabinet } from "../common/nomination";
 
 import { Button, ToggleState, Autocomplete } from "..";
 import { createMesure, createMesureSave } from "./actions/mesures";
@@ -43,32 +44,21 @@ const schema = {
     },
     type: {
       type: "string",
-      enum: [
-        "Tutelle",
-        "Curatelle",
-        "Sauvegarde de justice",
-        "Mesure ad hoc",
-        "MAJ",
-        "tutelle aux biens",
-        "tutelle à la personne",
-        "tutelle aux biens et à la personne",
-        "curatelle simple aux biens",
-        "curatelle simple à la personne",
-        "curatelle simple aux biens et à la personne",
-        "curatelle renforcée aux biens",
-        "curatelle renforcée à la personne",
-        "curatelle renforcée aux biens et à la personne",
-        "sauvegarde de justice",
-        "sauvegarde de justice avec mandat spécial"
-      ]
+      enum: typeMesure
     },
+    //TODO(Adrien): discus with PO
+    // ti_id: { type: "number" },
+    //cabinet: { type: "string", enum: cabinet },
     code_postal: { type: "string" },
     ville: { type: "string" },
-    civilite: { type: "string", enum: ["F", "H"] },
+    civilite: { type: "string", enum: civilite },
 
     annee: { type: "integer", default: "" },
     numero_dossier: { type: "string", default: "" },
-    residence: { type: "string", enum: ["A Domicile", "En établissement"] }
+    residence: {
+      type: "string",
+      enum: residence
+    }
   },
   dependencies: {
     residence: {
@@ -77,6 +67,13 @@ const schema = {
           properties: {
             residence: {
               enum: ["A Domicile"]
+            }
+          }
+        },
+        {
+          properties: {
+            residence: {
+              enum: ["En établissement avec conservation du domicile"]
             }
           }
         },
@@ -152,6 +149,15 @@ const uiSchema = {
       label: true
     }
   },
+  //TODO(Adrien): discus with PO
+  // ti_id: {
+  //   "ui:widget": "TisOfMandataireAutoComplete",
+  //   "ui:title": "Tribunal instance",
+  //   "ui:placeholder": "Ti",
+  //   "ui:options": {
+  //     label: true
+  //   }
+  // },
   etablissement_id: {
     "ui:widget": "EtablissementAutoComplete",
     "ui:title": "Etablissement",
@@ -159,8 +165,29 @@ const uiSchema = {
     "ui:options": {
       label: true
     }
+  },
+  numero_dossier: {
+    "ui:autofocus": true,
+    "ui:title": "Numéro de dossier",
+    "ui:options": {
+      label: true
+    }
   }
 };
+
+const TisOfMandataireAutoComplete = ({ items, value, onChange }) => (
+  <Autocomplete
+    items={items}
+    inputProps={{
+      style: { width: 300 },
+      placeholder: "Choisissez un tis ou vous êtes agrée"
+    }}
+    resetOnSelect={false}
+    value={value}
+    onSelect={obj => onChange(obj.id)}
+    labelKey={"etablissement"}
+  />
+);
 
 const EtablissementAutoComplete = ({ items, value, onChange }) => (
   <Autocomplete
@@ -180,8 +207,13 @@ const EtablissementAutoCompleteRedux = connect(state => ({
   items: state.mandataire.finess
 }))(EtablissementAutoComplete);
 
+const TisOfMandataireAutoCompleteRedux = connect(state => ({
+  items: state.mandataire.tis
+}))(TisOfMandataireAutoComplete);
+
 const widgets = {
-  EtablissementAutoComplete: EtablissementAutoCompleteRedux
+  EtablissementAutoComplete: EtablissementAutoCompleteRedux,
+  TisOfMandataireAutoComplete: TisOfMandataireAutoCompleteRedux
 };
 
 const CustomFieldTemplate = props => {

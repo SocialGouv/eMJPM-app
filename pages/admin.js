@@ -1,41 +1,32 @@
-import styled from "styled-components";
 import { Home, User } from "react-feather";
 
 import { Layout, DummyTabs } from "../src/components";
-import Navigation from "../src/components/communComponents/Navigation";
-import Footer from "../src/components/communComponents/Footer";
 import Users from "../src/components/admin/Users";
-
-const Title = styled.div`
-  color: black;
-  font-size: 1.5em;
-  margin: 10px;
-`;
 
 const tabs = [
   {
     text: "Utilisateurs",
+    url: "/admin/users",
     icon: <User />,
     content: (
       <div style={{ paddingTop: 10, background: "rgb(215, 223, 232)" }}>
         <h2 style={{ padding: "10px" }}>Gestion des utilisateurs</h2>
-        <Users />
+        <Users type={"mandataire"} />
       </div>
     )
   },
   {
     text: "TI",
+    url: "/admin/ti",
     icon: <Home />,
-    content: <div style={{ padding: 50, textAlign: "center" }}>Gestion des TI [todo]</div>
+    content: (
+      <div style={{ paddingTop: 10, background: "rgb(215, 223, 232)" }}>
+        <h2 style={{ padding: "10px" }}>Gestion des TI</h2>
+        <Users type={"ti"} />
+      </div>
+    )
   }
 ];
-
-const AdminPart = () => (
-  <div>
-    <h2>Administration e-MJPM</h2>
-    <DummyTabs tabs={tabs} />
-  </div>
-);
 
 const AdminPage = () => (
   <Layout logout>

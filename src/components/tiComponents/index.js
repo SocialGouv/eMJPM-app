@@ -19,13 +19,7 @@ import { FicheMandataireModal, ModalMesureValidation, ModalMesureReservation } f
 import TableMesures from "../mandataires/TableMesures";
 import apiFetch from "../communComponents/Api";
 
-const MapTable = dynamic({
-  modules: props => ({
-    MapTi: import("./MapTi")
-  }),
-  loading: () => <LoadingMessage />,
-  render: (props, { MapTi }) => <MapTi {...props} />
-});
+const MapTable = dynamic(() => import("./MapTi"), { ssr: false });
 
 class Ti extends React.Component {
   componentDidMount() {
@@ -43,16 +37,19 @@ class Ti extends React.Component {
       {
         text: "Majeurs Protégés",
         icon: <Users />,
+        url: "/tis/majeurs",
         content: <MapTable fetch={`/mesures/filters`} />
       },
       {
         text: "Mandataires",
         icon: <Users />,
+        url: "/tis/mandataires",
         content: <MapTable fetch={`/mandataires/filters`} isMandataire={true} />
       },
       {
-        text: "Mesures attribuées",
+        text: "Mesures réservées",
         icon: <Archive />,
+        url: "/tis/mesures",
         content: (
           <TableMesures
             fetch={() => apiFetch(`/mesures/getAllMesuresByTis`)}

@@ -8,7 +8,7 @@ import { updateMandataire } from "../actions/mandataire";
 import Layout from "./Layout";
 
 const schema = {
-  title: "Modifier vos informations",
+  title: "Modifier mes informations",
   type: "object",
   required: ["nom", "prenom", "genre"],
   properties: {
@@ -35,11 +35,36 @@ const schema = {
       title: "Nombre de mesures souhaitées",
       default: ""
     },
-    secretariat: { type: "boolean", title: "Secretariat", enumNames: ["Oui", "Non"] },
-    nb_secretariat: {
-      type: "number",
-      title: "Secrétariat : nombre d'ETP( Si temps partiel à 80% mettre 0.8)",
-      default: ""
+    secretariat: {
+      type: "boolean",
+      title: "Secretariat",
+      enumNames: ["Oui", "Non"]
+    },
+    zip: { type: "string", title: "Informations à destination des magistrats" }
+  },
+  dependencies: {
+    secretariat: {
+      oneOf: [
+        {
+          properties: {
+            secretariat: {
+              enum: [false]
+            }
+          }
+        },
+        {
+          properties: {
+            secretariat: {
+              enum: [true]
+            },
+            nb_secretariat: {
+              type: "number",
+              title: "Secrétariat : nombre d'ETP( Si temps partiel à 80% mettre 0.8)",
+              default: ""
+            }
+          }
+        }
+      ]
     }
   }
 };
@@ -81,6 +106,9 @@ const uiSchema = {
   },
   nb_secretariat: {
     "ui:placeholder": "Secrétariat : nombre d'ETP"
+  },
+  zip: {
+    "ui:widget": "textarea"
   }
 };
 

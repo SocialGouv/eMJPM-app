@@ -11,16 +11,7 @@ import Header from "./Header";
 import CreateMesure from "./CreateMesure";
 import InputFiles from "./inputFiles";
 
-// due to leaflet + SSR
-const OpenStreeMap = dynamic({
-  modules: props => ({
-    MapMesures: import("./MapMesures")
-  }),
-  loading: () => <LoadingMessage />,
-  render: (props, { MapMesures }) => {
-    return <MapMesures {...props} />;
-  }
-});
+const OpenStreeMap = dynamic(() => import("./MapMesures"), { ssr: false });
 
 class MandataireTabs extends React.Component {
   render() {
@@ -28,6 +19,7 @@ class MandataireTabs extends React.Component {
     const tabs = [
       {
         text: "Mesures en cours",
+        url: "/mandataires/mesures/en-cours",
         icon: <PillDispo />,
         content: (
           <React.Fragment>
@@ -49,11 +41,13 @@ class MandataireTabs extends React.Component {
       },
       {
         text: "Vue Carte",
+        url: "/mandataires/vue-carte",
         icon: <Map />,
         content: <OpenStreeMap getPromise={() => apiFetch(`/mandataires/1/mesuresForMaps`)} />
       },
       {
         text: "Mesures éteintes",
+        url: "/mandataires/mesures/eteintes",
         icon: <UserMinus />,
         content: (
           <TableMesures
@@ -71,7 +65,8 @@ class MandataireTabs extends React.Component {
         )
       },
       {
-        text: "Mesures en attente",
+        text: "Mesures réservées",
+        url: "/mandataires/mesures/en-attente",
         icon: <Clock />,
         content: (
           <TableMesures
@@ -91,11 +86,13 @@ class MandataireTabs extends React.Component {
       },
       {
         text: "Mes informations",
+        url: "/mandataires/mes-informations",
         icon: <Home />,
         content: <Profile />
       },
       {
-        text: "Importer",
+        text: `Importer`,
+        url: "/mandataires/importer",
         icon: <FilePlus />,
         content: <InputFiles />
       }

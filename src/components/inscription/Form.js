@@ -1,6 +1,7 @@
 import InscriptionIndividuel from "./InscriptionIndividuel";
 import InscriptionPrepose from "./InscriptionPrepose";
 import InscriptionService from "./InscriptionService";
+import InscriptionTi from "./InscriptionTi";
 import TiSelector from "./TiSelector";
 import Resolve from "../common/Resolve";
 import apiFetch from "../communComponents/Api";
@@ -9,7 +10,8 @@ import Router from "next/router";
 const formsMandataires = {
   individuel: props => <InscriptionIndividuel {...props} />,
   prepose: props => <InscriptionPrepose {...props} />,
-  service: props => <InscriptionService {...props} />
+  service: props => <InscriptionService {...props} />,
+  ti: props => <InscriptionTi {...props} />
 };
 
 const FormSelector = ({ label, value, onChange }) => (
@@ -49,29 +51,58 @@ class Form extends React.Component {
   setTis = tis => {
     this.setState({ tis });
   };
-  onSubmit = ({ formData }) => {
-    this.setState({ status: "loading", formData }, () => {
-      apiFetch(`/inscription/mandataires`, {
-        method: "POST",
-        body: JSON.stringify({
-          ...formData,
-          etablissement: formData.etablissement || "",
-          tis: this.state.tis,
-          type: this.state.typeMandataire
-        })
+  setFormData = formData => {
+    this.setState({ formData });
+  };
+
+  submitUser = formData => {
+    const usernameData = formData.username.toLowerCase().trim();
+    const url =
+      this.state.typeMandataire === "ti" ? "/inscription/tis" : "/inscription/mandataires";
+    apiFetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        ...formData,
+        etablissement: formData.etablissement || "",
+        tis: this.state.tis,
+        type: this.state.typeMandataire,
+        username: usernameData,
+        cabinet: formData.cabinet || null
       })
-        .then(json => {
-          if (json.success === false) {
-            throw new Error();
-          }
-          // piwik.push(["trackEvent", "Inscription success", formData.type]);
-          Router.push("/inscription-done");
-        })
-        .catch(() => {
-          // piwik.push(["trackEvent", "Inscription error", formData.type]);
-          this.setState({ status: "error" });
+    })
+      .then(json => {
+        if (json.success === false) {
+          throw new Error();
+        }
+        Router.push("/inscription-done");
+      })
+      .catch(() => {
+        this.setState({ status: "error" });
+      });
+  };
+
+  onSubmit = ({ formData }) => {
+    const hasNoTi = this.state.tis.length === 0;
+    const hasSingleTi = this.state.tis.length === 1;
+    const hasMultipleTi = this.state.tis.length > 1;
+    const isTi = this.state.typeMandataire === "ti";
+    const isValidCodePostal =
+      formData.code_postal &&
+      formData.code_postal.match(/^(([0-8][0-9])|(9[0-5])|(2[AB]))[0-9]{3}$/);
+
+    if (hasNoTi) {
+      return alert("Saisissez au moins un TI de référence");
+    } else if (!isTi && !isValidCodePostal) {
+      return alert("Code postal non valide");
+    } else if (isTi && hasMultipleTi) {
+      return alert("Saisissez un seul TI de référence");
+    } else {
+      if ((isTi && hasSingleTi) || (isValidCodePostal && !hasNoTi)) {
+        this.setState({ status: "loading", formData }, () => {
+          this.submitUser(formData);
         });
-    });
+      }
+    }
   };
 
   render() {
@@ -86,7 +117,7 @@ class Form extends React.Component {
               render={({ status, result }) => (
                 <div style={{ margin: "20px 0" }}>
                   <div style={{ fontSize: "1.2em", fontWeight: "bold", margin: "20px 0" }}>
-                    Choisissez les tribunaux ou vous êtes agréé :
+                    Choisissez les tribunaux sur lesquels vous exercez :
                   </div>
                   {status === "success" && <TiSelector onChange={this.setTis} tis={result[0]} />}
                   {status === "error" && <div>Impossible de charger la liste des Tribunaux</div>}
@@ -94,7 +125,7 @@ class Form extends React.Component {
                 </div>
               )}
             />
-            <div style={{ fontSize: "1.2em", fontWeight: "bold" }}>Vous êtes un mandataire :</div>
+            <div style={{ fontSize: "1.2em", fontWeight: "bold" }}>Vous êtes :</div>
             <table
               style={{
                 margin: "20px 0",
@@ -111,11 +142,20 @@ class Form extends React.Component {
                   />
                   <FormSelector value="prepose" label="Préposé" onChange={this.setTypeMandataire} />
                   <FormSelector value="service" label="Service" onChange={this.setTypeMandataire} />
+                  <FormSelector
+                    value="ti"
+                    label="Tribunal Instance"
+                    onChange={this.setTypeMandataire}
+                  />
                 </tr>
               </tbody>
             </table>
             {FormMandataire && (
-              <FormMandataire onSubmit={this.onSubmit} formData={this.state.formData} />
+              <FormMandataire
+                typeMandataire={this.state.typeMandataire}
+                onSubmit={this.onSubmit}
+                formData={this.state.formData}
+              />
             )}
             {this.state.status === "error" && (
               <div style={{ textAlign: "center", color: "red", fontSize: "1.1em" }}>

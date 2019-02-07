@@ -169,6 +169,24 @@ const COLUMNS = [
     style: { textAlign: "left", alignSelf: "center" }
   },
   {
+    Header: "Dispo",
+    id: "dispo",
+    accessor: d => d.dispo_max - d.mesures_en_cours - d.mesures_en_attente,
+    width: 50,
+    Cell: row => (
+      <Cell row={row} style={{ width: "100px" }} data-cy="circle-mesure">
+        <Circle
+          style={{
+            backgroundColor: getColorFromDisponibilite(row.row.mesures_en_cours / row.row.dispo_max)
+          }}
+        >
+          {row.row.dispo}
+        </Circle>
+      </Cell>
+    ),
+    style: { textAlign: "center", alignSelf: "center" }
+  },
+  {
     Header: "En cours",
     id: "en_cours",
     accessor: d => d.mesures_en_cours / d.dispo_max,
@@ -208,7 +226,16 @@ const COLUMNS = [
         row={row}
         style={{ fontSize: "0.8em", verticalAlign: "middle", textAlign: "center" }}
       >
-        {row.row.updateMandataire &&
+        {row.row.updateMandataire === null ? (
+          <span
+            className="d-inline-block"
+            tabIndex="0"
+            data-toggle="tooltip"
+            title="Dernière mise à jour des données datant de plus de 30 jours."
+          >
+            <AlertCircle />
+          </span>
+        ) : (
           isOlderThanOneMonth(row.row.updateMandataire.slice(0, 10)) && (
             <span
               className="d-inline-block"
@@ -218,7 +245,8 @@ const COLUMNS = [
             >
               <AlertCircle />
             </span>
-          )}
+          )
+        )}
       </CellMandataireRedux>
     ),
     style: { alignSelf: "center" }

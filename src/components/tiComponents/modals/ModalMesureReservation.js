@@ -1,6 +1,6 @@
 import * as React from "react";
 import Form from "react-jsonschema-form";
-
+import { typeMesure, civilite } from "../../common/nomination";
 //Redux
 import { connect } from "react-redux";
 import { show, connectModal } from "redux-modal";
@@ -16,9 +16,9 @@ const schema = {
     type: {
       type: "string",
       title: "Nature de la mesure",
-      enum: ["Tutelle", "Curatelle", "Sauvegarde de justice", "Mesure ad hoc", "MAJ"]
+      enum: typeMesure
     },
-    civilite: { type: "string", enum: ["F", "H"] },
+    civilite: { type: "string", enum: civilite },
     annee: { type: "integer", title: "Année de naissance" }
   }
 };
@@ -58,14 +58,16 @@ const ModalMesureReservation = ({
   return (
     <Layout show={show} handleHide={handleHide}>
       <div style={{ padding: "30px" }}>
-        <h2>Attribution d'une nouvelle mesure</h2>
-        <b>{reservationMandataire.etablissement}</b>
+        <h2>Réservation d&apos;une nouvelle mesure</h2>
+        <b>
+          {reservationMandataire.etablissement ||
+            reservationMandataire.nom + " " + reservationMandataire.prenom}
+        </b>
         <br />
         {reservationMandataire.type}
         <br />
-        <br />
-        {reservationMandataire.etablissement} recevra une notification par email.Une fois le mandat
-        reçu le mandataire pourra valider cette attribution de mesure.
+        Le mandataire recevra une alerte par email. Une fois la notification officielle reçue, le
+        mandataire mettra à jour ses mesures en cours.
         <br />
         <br />
         <Form

@@ -6,7 +6,6 @@ import { show } from "redux-modal";
 
 import { Button, Autocomplete, SelectionManager } from "..";
 import apiFetch from "../communComponents/Api";
-import piwik from "../../piwik";
 
 import { updateMandataire } from "./actions/mandataire";
 import Fiche from "./Fiche";
@@ -170,6 +169,12 @@ const MandataireProfile = ({ currentMandataire, etablissements = [], tis = [] })
           />
         )}
       />
+      {currentMandataire.zip && (
+        <div style={{ lineHeight: "3em" }} data-cy="fiche-manda-zip">
+          <h3>Informations à destination des magistrats </h3>
+          {currentMandataire.zip}
+        </div>
+      )}
     </div>
   </div>
 );

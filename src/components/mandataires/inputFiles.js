@@ -43,19 +43,18 @@ const ErrorsGroup = ({ title, errors }) => (
 );
 
 const Errors = ({ errors }) =>
-  (errors &&
-    Object.keys(errors).length && (
-      <Alert className="alert-danger">
-        Des erreurs ont été détectées dans votre fichier. Aucun ligne n'a été importée.
-        <br />
-        <br />
-        <div style={{ fontSize: "0.8em" }}>
-          {Object.keys(errors).map(key => (
-            <ErrorsGroup key={key} title={key} errors={errors[key]} />
-          ))}
-        </div>
-      </Alert>
-    )) ||
+  (errors && Object.keys(errors).length && (
+    <Alert className="alert-danger">
+      Des erreurs ont été détectées dans votre fichier. Aucun ligne n&apos;a été importée.
+      <br />
+      <br />
+      <div style={{ fontSize: "0.8em" }}>
+        {Object.keys(errors).map(key => (
+          <ErrorsGroup key={key} title={key} errors={errors[key]} />
+        ))}
+      </div>
+    </Alert>
+  )) ||
   null;
 
 // read the input file, clean input and post to API
@@ -102,7 +101,7 @@ const _ExcelRequirements = ({ className }) => (
     <tbody>
       <tr>
         <td>date_ouverture</td>
-        <td>Date de décision au format DD/MM/YYYY => 25/11/2010</td>
+        <td>Date de décision au format DD/MM/YYYY =&gt; 25/11/2010</td>
       </tr>
       <tr>
         <td>type</td>
@@ -111,7 +110,8 @@ const _ExcelRequirements = ({ className }) => (
       <tr>
         <td>code_postal</td>
         <td>
-          Code postal doit etre valide : par exemple 75000 n'est pas un code postal valide => 75001
+          Code postal doit etre valide : par exemple 75000 n&apos;est pas un code postal valide
+          =&gt; 75001
         </td>
       </tr>
       <tr>
@@ -120,22 +120,22 @@ const _ExcelRequirements = ({ className }) => (
       </tr>
       <tr>
         <td>civilite</td>
-        <td>Genre de MP: "F", "H", "Femme", "Homme"</td>
+        <td>Genre de MP: &quot;F&quot;, &quot;H&quot;, &quot;Femme&quot;, &quot;Homme&quot;</td>
       </tr>
       <tr>
         <td>annee</td>
-        <td>Date de naissance au format DD/MM/YYYY => 22/08/1980</td>
+        <td>Date de naissance au format DD/MM/YYYY =&gt; 22/08/1980</td>
       </tr>
       <tr>
         <td>numero_dossier</td>
         <td>
-          Le numéro de dossier tel que vous avez l'habitude de le connaitre. Ce champ est libre et
-          peu contenir tous types de caractères
+          Le numéro de dossier tel que vous avez l&apos;habitude de le connaitre. Ce champ est libre
+          et peu contenir tous types de caractères
         </td>
       </tr>
       <tr>
         <td>residence</td>
-        <td>"A domicile" ou "En établissement"</td>
+        <td>&quot;A domicile&quot; ou &quot;En établissement&quot;</td>
       </tr>
     </tbody>
   </table>
@@ -205,16 +205,16 @@ class InputFiles extends React.Component {
   render() {
     return (
       <div style={{ padding: 20 }}>
-        <h1>Importation d'un fichier excel (mesures)</h1>
+        <h1>Importation d&apos;un fichier excel (mesures)</h1>
         <p>
-          <b style={{ color: "red" }}>
+          <b style={{ color: "red", fontSize: "1.5em" }}>
             !!!Merci de lire et de bien respecter les instructions suivantes!!!
           </b>
           <br />
           Vous trouverez ci-après le libellé des entêtes de colonnes qui doivent être présentes dans
-          votre fichier excel. Aucune n'est obligatoire. Attention à bien respecter la casse : tout
-          en minuscule, pas d'espace notamment à la fin des libellés. Les espaces sont remplacés par
-          des _ (touche 8 du clavier)
+          votre fichier excel. Aucune n&apos;est obligatoire. Attention à bien respecter la casse :
+          tout en minuscule, pas d&apos;espace notamment à la fin des libellés. Les espaces sont
+          remplacés par des _ (touche 8 du clavier)
         </p>
         <ExcelRequirements />
         <p>
@@ -230,6 +230,12 @@ class InputFiles extends React.Component {
             data-cy="button-upload-excel"
             onChange={this.readInputFile}
           />
+          <br />
+          <b style={{ color: "red", fontSize: "1.5em" }}>
+            Vous n&apos;arrivez pas à importer votre tableau excel? Envoyez-le nous par email à
+            contact@emjpm.beta.gouv.fr. Nous le vérifierons, le mettrons en page et vous le
+            renverrons pour que vous puissiez l&apos;importer.{" "}
+          </b>
         </p>
         {this.state.status === "success" && (
           <Alert className="alert-success">

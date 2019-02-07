@@ -13,8 +13,8 @@ import FilterMandataires from "./FilterMandataires";
 
 const Attribution = () => (
   <TileLayer
-    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-    url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
   />
 );
 
@@ -23,7 +23,9 @@ class MapTi extends React.Component {
     filterData: [],
     zoom: 7,
     loading: false,
-    circleSelected: ""
+    circleSelected: "",
+    lat: 50.459441,
+    lng: 2.693963
   };
 
   mapRef = createRef();
@@ -54,6 +56,15 @@ class MapTi extends React.Component {
 
   componentDidMount() {
     this.fetchData();
+    apiFetch(`/usersTi`)
+      .then(data => {
+        this.setState({
+          lat: data.latitude,
+          lng: data.longitude,
+          zoom: 10
+        });
+      })
+      .catch(console.log);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -89,10 +100,37 @@ class MapTi extends React.Component {
     });
   };
 
+  fetchpostCode = codePostal =>
+    apiFetch("/mandataires/PosteCode", {
+      method: "POST",
+      body: JSON.stringify({
+        codePoste: codePostal
+      })
+    });
+
+  zoomCodePostal = codePostal => {
+    if (!codePostal || !codePostal.trim()) {
+      return Promise.resolve(null);
+    } else if (!codePostal.match(/^(([0-8][0-9])|(9[0-5])|(2[AB]))[0-9]{3}$/)) {
+      return alert("Code postal non valide");
+    }
+    this.fetchpostCode(codePostal)
+      .then(mesure => {
+        this.setState({
+          lat: mesure.latitude,
+          lng: mesure.longitude
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
   render() {
-    this.mapRef.current && this.mapRef.current.leafletElement.setMaxZoom(10);
+    this.mapRef.current && this.mapRef.current.leafletElement.setMaxZoom(13);
     const { dataFilters, datamesureFilters, isMandataire, filters, coordinates } = this.props;
-    const center = getCenter(this.state, coordinates);
+    //const center = getCenter(this.state, coordinates);
+    const center = [this.state.lat, this.state.lng];
     const filterMesure = {
       content: "type",
       filter: filters,
@@ -104,7 +142,7 @@ class MapTi extends React.Component {
     return (
       <React.Fragment>
         <div style={{ display: "flex" }}>
-          <FilterMesuresMap />
+          <FilterMesuresMap zoomCodePostal={this.zoomCodePostal} />
           <FilterMandataires isMandataire={isMandataire} />
         </div>
         <div
@@ -156,8 +194,7 @@ const mapStateToProps = state => ({
   datamesureFilters: state.mandataire.datamesureFilters,
   services: state.mandataire.services,
   filters: state.mandataire.filters,
-  data: state.mandataire.data,
-  coordinates: state.map.coordinates
+  data: state.mandataire.data
 });
 
 export default connect(mapStateToProps)(MapTi);

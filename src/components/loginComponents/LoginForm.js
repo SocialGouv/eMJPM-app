@@ -4,7 +4,7 @@ import Form from "react-jsonschema-form";
 import styled from "styled-components";
 import Router from "next/router";
 
-import piwik from "../../piwik";
+import piwik, { trackUser } from "../../piwik";
 
 const API_URL = process.env.API_URL;
 
@@ -14,7 +14,6 @@ const doLogin = formData => {
     credentials: "include",
     method: "POST",
     headers: {
-      //  Accept: "application/json",
       "Content-Type": "application/json"
     },
     body: JSON.stringify(formData)
@@ -48,7 +47,7 @@ const uiSchema = {
     "ui:widget": "password",
     "ui:options": {
       label: false
-    } // could also be "select"
+    }
   },
   username: {
     "ui:placeholder": "Identifiant",
@@ -105,7 +104,7 @@ export const LoginFormView = ({ formData, onSubmit, error, status }) => (
           "Me connecter"}
       </button>
       <br />
-      <a href="/forgot-password">J'ai oublié mon mot de passe</a>
+      <a href="/forgot-password">J&apos;ai oublié mon mot de passe</a>
       <ErrorBox message={error} />
       <hr style={{ marginTop: 20 }} />
       <a href="mailto:contact@emjpm.beta.gouv.fr?subject=eMJPM&body=Bonjour,">
@@ -133,6 +132,18 @@ class LoginForm extends React.Component {
         input.focus();
       }
     }
+
+    // workaround autofill bugs with react-jsonschema-form
+    // https://github.com/mozilla-services/react-jsonschema-form/issues/184
+    // use the DOM to fill initial formData
+    const autofillValues = {
+      username: node.querySelector("#root_username") && node.querySelector("#root_username").value,
+      password: node.querySelector("#root_password") && node.querySelector("#root_password").value
+    };
+
+    this.setState({
+      formData: autofillValues
+    });
   }
 
   setToken = idToken => {
@@ -149,22 +160,25 @@ class LoginForm extends React.Component {
       },
       () => {
         doLogin(formData)
+          .then(json => {
+            this.setToken(json.token);
+            piwik.push(["trackEvent", "login", "success"]);
+
+            trackUser();
+
+            Router.push(json.url);
+            this.setState({
+              status: "success",
+              error: null
+            });
+          })
           .catch(e => {
             piwik.push(["trackEvent", "login", "error"]);
             this.setState({
               status: "error",
               error: "Impossible de se connecter"
             });
-            throw e;
-          })
-          .then(json => {
-            this.setToken(json.token);
-            piwik.push(["trackEvent", "login", "success"]);
-            Router.push(json.url);
-            this.setState({
-              status: "success",
-              error: null
-            });
+            //throw e;
           });
       }
     );
