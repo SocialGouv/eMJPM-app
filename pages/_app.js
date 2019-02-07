@@ -1,5 +1,3 @@
-//
-
 import * as Sentry from "@sentry/browser";
 import App, { Container } from "next/app";
 import getConfig from "next/config";
@@ -19,14 +17,36 @@ import "../static/css/custom.css";
 import "../static/css/panel.css";
 
 export default class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps(appContext) {
+    const { Component, ctx } = appContext;
+
     let pageProps = {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
+    try {
+      if (Component.getInitialProps) {
+        pageProps = await Component.getInitialProps(ctx);
+      }
+    } catch (e) {
+      Sentry.captureException(e, ctx);
+      throw e; // you can also skip re-throwing and set property on pageProps
     }
 
-    return { pageProps };
+    return {
+      pageProps
+    };
+  }
+
+  componentDidMount() {
+    piwikSetup();
+    Sentry.init({
+      dsn: SENTRY_PUBLIC_DSN,
+      attachStacktrace: true,
+      integrations: integrations => {
+        // remove dedupe plugin
+        return integrations.filter(integration => integration.name !== "Dedupe");
+      }
+      //tags: { git_commit: "c0deb10c4" }
+    });
   }
 
   render() {
@@ -36,23 +56,6 @@ export default class MyApp extends App {
         <Component {...pageProps} />
       </Container>
     );
-  }
-  componentDidMount() {
-    piwikSetup();
-    Sentry.init({ dsn: SENTRY_PUBLIC_DSN });
-  }
-
-  componentDidCatch(error, errorInfo) {
-    // From https://github.com/zeit/next.js/blob/52767345359bb4c8a329fe3e79a9186b75358b22/examples/with-sentry/pages/_app.js#L9
-    Sentry.configureScope(scope => {
-      Object.keys(errorInfo).forEach(key => {
-        scope.setExtra(key, errorInfo[key]);
-      });
-    });
-    Sentry.captureException(error);
-
-    // This is needed to render errors correctly in development / production
-    super.componentDidCatch(error, errorInfo);
   }
 }
 
