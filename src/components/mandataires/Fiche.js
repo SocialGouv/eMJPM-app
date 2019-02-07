@@ -1,5 +1,7 @@
 import { Phone, Smartphone, Mail, Home, Info } from "react-feather";
 
+import ImportCV from "../common/ImportCV";
+
 const iconStyle = { width: 22, height: 22, marginRight: 10 };
 
 // fiche recap
@@ -82,6 +84,7 @@ const FicheMandataire = ({
         </tbody>
       </table>
       <br />
+      <ImportCV />
     </div>
   );
 };
