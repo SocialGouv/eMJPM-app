@@ -264,7 +264,6 @@ describe("Inscription", () => {
       cy.get("[data-cy='UserCellAction']").should("have.length", 1);
       cy.get("[data-cy='En attente de validation']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
-<<<<<<< HEAD
       cy.get(".rt-tr ")
         .contains("email-ti@email.com")
         .parent(".rt-tr")
@@ -273,11 +272,6 @@ describe("Inscription", () => {
             .last()
             .click();
         });
-=======
-      cy.get("[data-cy='UserCellAction']")
-        .last()
-        .click();
->>>>>>> parent of 1bf9476... tests: fix registration TI e2e
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
       cy.get("[data-cy='Actifs']").click();
       cy.get("[data-cy='UserCellAction']").should("have.length", 2);
