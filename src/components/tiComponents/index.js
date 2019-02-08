@@ -20,8 +20,7 @@ import {
   FicheMandataireModal,
   ModalMesureValidation,
   ModalMesureReservation,
-  EditMesure,
-  CloseMesure
+  EditMesure
 } from "./modals";
 import TableMesures from "../mandataires/TableMesures";
 //import TableMesures from "./TableMesures";
@@ -68,7 +67,8 @@ class Ti extends React.Component {
               "valider",
               "date_demande",
               "ti",
-              "mandataire_id"
+              "mandataire_id",
+              "fin-mandat"
             ]}
           />
         )
@@ -81,7 +81,6 @@ class Ti extends React.Component {
         <ModalMesureValidation />
         <ModalMesureReservation />
         <EditMesure />
-        <CloseMesure />
       </div>
     );
   }

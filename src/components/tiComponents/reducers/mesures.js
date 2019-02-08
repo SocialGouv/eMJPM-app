@@ -6,7 +6,6 @@ const MESURES_INITIAL_STATE = {
 const mesuresReducer = (state = MESURES_INITIAL_STATE, action) => {
   switch (action.type) {
     case "MESURE_UPDATED":
-    case "MESURE_CLOSED":
       return {
         ...state,
         lastUpdate: new Date()
