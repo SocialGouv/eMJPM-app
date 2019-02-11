@@ -15,7 +15,7 @@ const schema = {
     "ville"
   ],
   properties: {
-    email: { type: "string", default: "" },
+    email: { type: "string",format: "email",  default: "" },
     pass1: { type: "string", minLength: 8 },
     pass2: { type: "string", minLength: 8 },
     nom: { type: "string", default: "" },

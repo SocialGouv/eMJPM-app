@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { format } from "date-fns";
 import { updateMesure } from "../actions/mesures";
-import Layout from "../../communComponents/Layout";
+import Layout from "../../communComponents/ModalLayout";
 import { typeMesure, civilite } from "../../common/nomination";
 
 const schema = {
