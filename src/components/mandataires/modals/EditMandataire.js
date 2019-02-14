@@ -10,7 +10,7 @@ import Layout from "../../communComponents/ModalLayout";
 const schema = {
   title: "Modifier mes informations",
   type: "object",
-  required: ["nom", "prenom","email"],
+  required: ["nom", "prenom", "email", "genre"],
   properties: {
     nom: { type: "string", title: "Nom", default: "" },
     prenom: { type: "string", title: "Prénom", default: "" },
@@ -18,7 +18,8 @@ const schema = {
       type: "string",
       title: "Genre",
       enum: ["F", "H"],
-      enumNames: ["Femme", "Homme"]
+      enumNames: ["Femme", "Homme"],
+      default: ""
     },
     telephone: { type: "string", title: "Téléphone", default: "" },
     telephone_portable: {
@@ -76,7 +77,6 @@ const uiSchema = {
   nom: {
     "ui:placeholder": "Nom"
   },
-
   prenom: {
     "ui:placeholder": "Prénom"
   },
@@ -113,15 +113,25 @@ const uiSchema = {
 };
 
 const EditMandataire = ({ show, handleHide, formData, onSubmit, ...props }) => {
-  // todo: we should have perfect mapping api<->data<->form
-  // const cleanData = {
-  //   ...formData,
-  //   date_ouverture: format(formData.date_ouverture, "YYYY-MM-DD"),
-  //   annee: parseInt(formData.annee)
-  // };
+  const cleanData = {
+    nom: formData.nom || "",
+    prenom: formData.prenom || "",
+    email: formData.email || "",
+    zip: formData.zip || "",
+    genre: formData.genre || "",
+    secretariat: formData.secretariat || false,
+    nb_secretariat: formData.nb_secretariat || 0,
+    telephone: formData.telephone || "",
+    telephone_portable: formData.telephone_portable || "",
+    adresse: formData.adresse || "",
+    code_postal: formData.code_postal || "",
+    dispo_max: formData.dispo_max || 0,
+    ville: formData.ville || ""
+  };
+
   return (
     <Layout show={show} handleHide={handleHide} className="FicheMandataireModal">
-      <Form schema={schema} uiSchema={uiSchema} formData={formData} onSubmit={onSubmit}>
+      <Form schema={schema} uiSchema={uiSchema} formData={cleanData} onSubmit={onSubmit}>
         <div style={{ margin: "20px 0", textAlign: "center" }}>
           <button type="submit" className="btn btn-success" style={{ padding: "10px 30px" }}>
             Valider

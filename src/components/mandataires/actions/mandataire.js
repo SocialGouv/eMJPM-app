@@ -29,7 +29,6 @@ const updateMandataireApi = data =>
       ville: data.ville || ""
     })
   });
-
 const fetchAllTis = () => apiFetch("/mandataires/tis");
 const fetchAllFiness = () =>
   apiFetch("/mandataires/1/etablissements").then(data => data.filter((_, i) => i < 1000));
