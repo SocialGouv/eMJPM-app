@@ -47,11 +47,11 @@ const Selector = ({
           <tr key={id} style={{ background: i % 2 ? "#fff" : "rgba(0, 0, 0, 0.03)" }}>
             <td style={{ padding: 5 }}>▪ {nom}</td>
             <td style={{ width: 20, textAlign: "center" }}>
-              <MinusSquare
-                title="Supprimer"
-                style={{ cursor: "pointer", width: 22, height: 22 }}
-                onClick={() => onRemove({ id, nom })}
-              />
+              {/*<MinusSquare*/}
+                {/*title="Supprimer"*/}
+                {/*style={{ cursor: "pointer", width: 22, height: 22 }}*/}
+                {/*onClick={() => onRemove({ id, nom })}*/}
+              {/*/>*/}
             </td>
           </tr>
         ))}
@@ -139,11 +139,11 @@ const MandataireProfile = ({ currentMandataire, etablissements = [], tis = [] })
             })
           })
         }
-        onRemove={id =>
-          apiFetch(`/mandataires/1/tis/${id}`, {
-            method: "DELETE"
-          })
-        }
+        //onRemove={id =>
+        // apiFetch(`/mandataires/1/tis/${id}`, {
+        // method: "DELETE"
+        // })
+        // }
         getSelection={() =>
           apiFetch("/mandataires/1/tis").then(
             data =>
@@ -165,7 +165,7 @@ const MandataireProfile = ({ currentMandataire, etablissements = [], tis = [] })
             }
             selected={selection}
             onAdd={onAdd}
-            onRemove={onRemove}
+            // onRemove={onRemove}
           />
         )}
       />
