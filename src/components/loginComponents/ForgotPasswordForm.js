@@ -7,7 +7,7 @@ import piwik from "../../piwik";
 
 const API_URL = process.env.API_URL;
 
-const doForgotPassword = formData => {
+export const doForgotPassword = formData => {
   const url = `${API_URL}/auth/forgot_password`;
   return fetch(url, {
     credentials: "include",
