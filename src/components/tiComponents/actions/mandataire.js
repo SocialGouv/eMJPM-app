@@ -10,9 +10,11 @@ export const FICHE_CLOSED = "FICHE_CLOSED";
 export const MANDATAIRE_ETABLISSEMENT = "MANDATAIRE_ETABLISSEMENT";
 export const MANDATAIRE_TIS = "MANDATAIRE_TIS";
 export const UPDATE_FILTERS_MANDATAIRES = "UPDATE_FILTERS_MANDATAIRES";
+export const USER_PROFILE = "USER_PROFILE";
 
 /* ---------- API */
 
+const fetchProfile = () => apiFetch(`/users/1`);
 const fetchMandataires = () => apiFetch(`/mandataires`);
 const fetchMesures = () => apiFetch("/mesures/popup");
 const fetchServices = () => apiFetch("/mandataires/services");
@@ -46,6 +48,9 @@ export const tiMount = () => dispatch =>
     })
     .then(() => {
       fetchServices().then(mesures => dispatch(servicesShow(mesures)));
+    })
+    .then(() => {
+      fetchProfile().then(json => dispatch(userProfile(json)));
     });
 
 export const openFicheMandataireModal = mandataire => {
@@ -72,7 +77,7 @@ export const openValidationModal = ({ formData }) => {
       })
       .then(() =>
         fetchUpdateMesureAttente(formData).then(() =>
-          fetchMandataires().then(json => dispatch(mandatairesUpdated(json)))
+          fetchMandataires().then(json => dispatch(userProfile(json)))
         )
       )
       .catch(e => {
@@ -82,6 +87,11 @@ export const openValidationModal = ({ formData }) => {
 };
 
 /* ----------- PLAIN ACTIONS  */
+
+export const userProfile = data => ({
+  type: USER_PROFILE,
+  data
+});
 
 export const mandatairesUpdated = data => ({
   type: MANDATAIRES_UPDATED,
