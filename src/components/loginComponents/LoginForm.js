@@ -175,7 +175,7 @@ class LoginForm extends React.Component {
           .catch(e => {
             piwik.push(["trackEvent", "login", "error"]);
             this.setState({
-              status: "error",
+                status: "error",
               error: "Impossible de se connecter"
             });
             throw e;

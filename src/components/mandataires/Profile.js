@@ -9,7 +9,10 @@ import apiFetch from "../communComponents/Api";
 
 import { updateMandataire } from "./actions/mandataire";
 import Fiche from "./Fiche";
+import piwik from "../../piwik";
+import Router from "next/dist/lib/router";
 
+import { doForgotPassword } from "../loginComponents/ForgotPasswordForm";
 // pick and display selected etablissement / tis
 const Selector = ({
   title,
@@ -48,9 +51,9 @@ const Selector = ({
             <td style={{ padding: 5 }}>▪ {nom}</td>
             <td style={{ width: 20, textAlign: "center" }}>
               {/*<MinusSquare*/}
-                {/*title="Supprimer"*/}
-                {/*style={{ cursor: "pointer", width: 22, height: 22 }}*/}
-                {/*onClick={() => onRemove({ id, nom })}*/}
+              {/*title="Supprimer"*/}
+              {/*style={{ cursor: "pointer", width: 22, height: 22 }}*/}
+              {/*onClick={() => onRemove({ id, nom })}*/}
               {/*/>*/}
             </td>
           </tr>
@@ -82,6 +85,14 @@ const ButtonEditMandataire = connect(
   </>
 ));
 
+const ChangePassword = email => {
+  doForgotPassword(email)
+    .then(() => {
+      alert("Un email vient de vous être envoyé");
+    })
+    .catch(e => console.log(e));
+};
+
 const MandataireProfile = ({ currentMandataire, etablissements = [], tis = [] }) => (
   <div style={{ padding: 20, display: "flex", flexDirection: "row" }}>
     <div style={{ flex: "0 0 50%" }}>
@@ -90,6 +101,10 @@ const MandataireProfile = ({ currentMandataire, etablissements = [], tis = [] })
       <br />
       <br />
       <ButtonEditMandataire formData={currentMandataire} />
+      <a href="/mandataires" onClick={() => ChangePassword({ email: currentMandataire.email })}>
+        {" "}
+        Modifier mon mot de passe{" "}
+      </a>
     </div>
     <div style={{ flex: "0 0 50%" }}>
       {(currentMandataire.type === "prepose" && (
