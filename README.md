@@ -1,3 +1,8 @@
+# Deprecated
+
+see https://github.com/SocialGouv/emjpm
+
+
 # eMJPM app
 
 WebApp en ReactJS pour [emjpm.beta.gouv.fr](http://emjpm.beta.gouv.Fr)
